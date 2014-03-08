@@ -98,7 +98,6 @@ typedef union
  * 定义运行到RAM的函数
  */
 #define __RAMFUNC __attribute__((__long_call__, __section__(".m_data_20000000")))
-//#define     __RAMFUNC
 #define __BREAKPOINT() asm("BKPT 255")
 
 #include "log.h"
