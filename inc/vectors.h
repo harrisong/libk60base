@@ -309,6 +309,8 @@ typedef struct {
 
 void InitVectorTable(void);
 void SetIsr(VECTORn_t vector, tIsrFunc handler);
+void EnableIsr(VECTORn_t vector);
+void DisableIsr(VECTORn_t vector);
 __ISR void DefaultIsr(void);
 void HardFaultHandlerAsm(void) __attribute__((__naked__));
 

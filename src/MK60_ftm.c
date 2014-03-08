@@ -1,40 +1,40 @@
 /*!
  *     COPYRIGHT NOTICE
- *     Copyright (c) 2013,Ұ��Ƽ�
+ *     Copyright (c) 2013,野火科技
  *     All rights reserved.
- *     �������ۣ�Ұ���ѧ��̳ http://www.chuxue123.com
+ *     技术讨论：野火初学论坛 http://www.chuxue123.com
  *
- *     ��ע�������⣬�����������ݰ�Ȩ����Ұ��Ƽ����У�δ������������������ҵ��;��
- *     �޸�����ʱ���뱣��Ұ��Ƽ��İ�Ȩ������
+ *     除注明出处外，以下所有内容版权均属野火科技所有，未经允许，不得用于商业用途，
+ *     修改内容时必须保留野火科技的版权声明。
  *
  * @file       MK60_ftm.c
- * @brief      FTM��ʱ��������
- * @author     Ұ��Ƽ�
+ * @brief      FTM定时器函数库
+ * @author     野火科技
  * @version    v5.0
  * @date       2013-08-22
  */
 
 /*
- * ����ͷ�ļ�
+ * 包含头文件
  */
 #include "common.h"
 #include  "MK60_FTM.h"
 
 /*
- * ��������
+ * 定义数组
  */
-FTM_MemMapPtr FTMN[3] = {FTM0_BASE_PTR, FTM1_BASE_PTR, FTM2_BASE_PTR}; //��������ָ�����鱣�� FTMn_e �ĵ�ַ
+FTM_MemMapPtr FTMN[3] = {FTM0_BASE_PTR, FTM1_BASE_PTR, FTM2_BASE_PTR}; //定义三个指针数组保存 FTMn_e 的地址
 
 
 /*!
- *  @brief      ��ʼ��FTM ��PWM ����
- *  @param      FTMn_e    ģ��ţ�FTM0��  FTM1��  FTM2��
- *  @param      FTM_CHn_e     ͨ���ţ�CH0~CH7��
- *  @param      freq    Ƶ�ʣ���λΪHz��
- *  @param      duty    ռ�ձȷ��ӣ�ռ�ձ� = duty / FTMn_PRECISON
+ *  @brief      初始化FTM 的PWM 功能
+ *  @param      FTMn_e    模块号（FTM0、  FTM1、  FTM2）
+ *  @param      FTM_CHn_e     通道号（CH0~CH7）
+ *  @param      freq    频率（单位为Hz）
+ *  @param      duty    占空比分子，占空比 = duty / FTMn_PRECISON
  *  @since      v5.0
- *  @note       ͬһ��FTM��PWMƵ���Ǳ���һ���ģ���ռ�ձȿɲ�һ������3��FTM�����������3����ͬƵ��PWM
- *  Sample usage:       FTM_PWM_init(FTM0, FTM_CH6,200, 10);    //��ʼ�� FTM0_CH6 Ϊ Ƶ�� 200Hz ��PWM��ռ�ձ�Ϊ 10/FTM0_PRECISON
+ *  @note       同一个FTM，PWM频率是必须一样的，但占空比可不一样。共3个FTM，即可以输出3个不同频率PWM
+ *  Sample usage:       FTM_PWM_init(FTM0, FTM_CH6,200, 10);    //初始化 FTM0_CH6 为 频率 200Hz 的PWM，占空比为 10/FTM0_PRECISON
  */
 void FTM_PWM_init(FTMn_e ftmn, FTM_CHn_e ch, uint32 freq, uint32 duty)
 {
@@ -43,14 +43,14 @@ void FTM_PWM_init(FTMn_e ftmn, FTM_CHn_e ch, uint32 freq, uint32 duty)
     uint8  ps;
     uint16 cv;
 
-    ASSERT( (ftmn == FTM0) || ( (ftmn == FTM1 || ftmn == FTM2 ) && (ch <= FTM_CH1))   );  //��鴫�ݽ�����ͨ���Ƿ���ȷ
-    ASSERT( freq <= ((bus_clk_khz * 1000u) >> 1) );                                           //�ö��Լ�� Ƶ�� �Ƿ����� ,Ƶ�ʱ���С��ʱ�Ӷ���֮һ
+    ASSERT( (ftmn == FTM0) || ( (ftmn == FTM1 || ftmn == FTM2 ) && (ch <= FTM_CH1))   );  //检查传递进来的通道是否正确
+    ASSERT( freq <= ((bus_clk_khz * 1000u) >> 1) );                                           //用断言检测 频率 是否正常 ,频率必须小于时钟二分之一
 
-    /******************* ����ʱ�� �� ����IO��*******************/
+    /******************* 开启时钟 和 复用IO口*******************/
     switch(ftmn)
     {
     case FTM0:
-        SIM_SCGC6 |= SIM_SCGC6_FTM0_MASK;       //ʹ��FTM0ʱ��
+        SIM_SCGC6 |= SIM_SCGC6_FTM0_MASK;       //使能FTM0时钟
         switch(ch)
         {
         case FTM_CH0:
@@ -64,7 +64,7 @@ void FTM_PWM_init(FTMn_e ftmn, FTM_CHn_e ch, uint32 freq, uint32 duty)
             }
             else
             {
-                ASSERT(0);                      //���ùܽ�����
+                ASSERT(0);                      //设置管脚有误？
             }
             break;
 
@@ -79,7 +79,7 @@ void FTM_PWM_init(FTMn_e ftmn, FTM_CHn_e ch, uint32 freq, uint32 duty)
             }
             else
             {
-                ASSERT(0);                      //���ùܽ�����
+                ASSERT(0);                      //设置管脚有误？
             }
             break;
 
@@ -94,7 +94,7 @@ void FTM_PWM_init(FTMn_e ftmn, FTM_CHn_e ch, uint32 freq, uint32 duty)
             }
             else
             {
-                ASSERT(0);                      //���ùܽ�����
+                ASSERT(0);                      //设置管脚有误？
             }
             break;
 
@@ -109,7 +109,7 @@ void FTM_PWM_init(FTMn_e ftmn, FTM_CHn_e ch, uint32 freq, uint32 duty)
             }
             else
             {
-                ASSERT(0);                      //���ùܽ�����
+                ASSERT(0);                      //设置管脚有误？
             }
             break;
 
@@ -124,7 +124,7 @@ void FTM_PWM_init(FTMn_e ftmn, FTM_CHn_e ch, uint32 freq, uint32 duty)
             }
             else
             {
-                ASSERT(0);                      //���ùܽ�����
+                ASSERT(0);                      //设置管脚有误？
             }
             break;
 
@@ -139,7 +139,7 @@ void FTM_PWM_init(FTMn_e ftmn, FTM_CHn_e ch, uint32 freq, uint32 duty)
             }
             else
             {
-                ASSERT(0);                      //���ùܽ�����
+                ASSERT(0);                      //设置管脚有误？
             }
             break;
 
@@ -154,7 +154,7 @@ void FTM_PWM_init(FTMn_e ftmn, FTM_CHn_e ch, uint32 freq, uint32 duty)
             }
             else
             {
-                ASSERT(0);                      //���ùܽ�����
+                ASSERT(0);                      //设置管脚有误？
             }
             break;
 
@@ -169,7 +169,7 @@ void FTM_PWM_init(FTMn_e ftmn, FTM_CHn_e ch, uint32 freq, uint32 duty)
             }
             else
             {
-                ASSERT(0);                      //���ùܽ�����
+                ASSERT(0);                      //设置管脚有误？
             }
             break;
         default:
@@ -178,7 +178,7 @@ void FTM_PWM_init(FTMn_e ftmn, FTM_CHn_e ch, uint32 freq, uint32 duty)
         break;
 
     case FTM1:
-        SIM_SCGC6 |= SIM_SCGC6_FTM1_MASK;       //ʹ��FTM1ʱ��
+        SIM_SCGC6 |= SIM_SCGC6_FTM1_MASK;       //使能FTM1时钟
         switch(ch)
         {
         case FTM_CH0:
@@ -188,7 +188,7 @@ void FTM_PWM_init(FTMn_e ftmn, FTM_CHn_e ch, uint32 freq, uint32 duty)
             }
             else
             {
-                ASSERT(0);                      //���ùܽ�����
+                ASSERT(0);                      //设置管脚有误？
             }
             break;
 
@@ -200,7 +200,7 @@ void FTM_PWM_init(FTMn_e ftmn, FTM_CHn_e ch, uint32 freq, uint32 duty)
             }
             else
             {
-                ASSERT(0);                      //���ùܽ�����
+                ASSERT(0);                      //设置管脚有误？
             }
             break;
 
@@ -210,7 +210,7 @@ void FTM_PWM_init(FTMn_e ftmn, FTM_CHn_e ch, uint32 freq, uint32 duty)
         break;
 
     case FTM2:
-        SIM_SCGC3 |= SIM_SCGC3_FTM2_MASK;                           //ʹ��FTM2ʱ��
+        SIM_SCGC3 |= SIM_SCGC3_FTM2_MASK;                           //使能FTM2时钟
         switch(ch)
         {
         case FTM_CH0:
@@ -220,7 +220,7 @@ void FTM_PWM_init(FTMn_e ftmn, FTM_CHn_e ch, uint32 freq, uint32 duty)
             }
             else
             {
-                ASSERT(0);                      //���ùܽ�����
+                ASSERT(0);                      //设置管脚有误？
             }
             break;
 
@@ -231,7 +231,7 @@ void FTM_PWM_init(FTMn_e ftmn, FTM_CHn_e ch, uint32 freq, uint32 duty)
             }
             else
             {
-                ASSERT(0);                      //���ùܽ�����
+                ASSERT(0);                      //设置管脚有误？
             }
             break;
 
@@ -243,36 +243,36 @@ void FTM_PWM_init(FTMn_e ftmn, FTM_CHn_e ch, uint32 freq, uint32 duty)
         break;
     }
 
-    /*       ����Ƶ������        */
-    //  �� CPWMS = 1 ����˫�߲�׽���壬�� PMWƵ�� =  busƵ�� /2 /(2^Ԥ��Ƶ����)/ģ��
-    //  �� CPWMS = 0 �������߲�׽���壬�� PMWƵ�� =  busƵ��    /(2^Ԥ��Ƶ����)/ģ��
-    //  EPWM������ ��MOD - CNTIN + 0x0001   (CNTIN ��Ϊ0)
-    //  ������ȣ�CnV - CNTIN
+    /*       计算频率设置        */
+    //  若 CPWMS = 1 ，即双边捕捉脉冲，则 PMW频率 =  bus频率 /2 /(2^预分频因子)/模数
+    //  若 CPWMS = 0 ，即单边捕捉脉冲，则 PMW频率 =  bus频率    /(2^预分频因子)/模数
+    //  EPWM的周期 ：MOD - CNTIN + 0x0001   (CNTIN 设为0)
+    //  脉冲宽度：CnV - CNTIN
 
-    //  ģ�� MOD < 0x10000
-    //  Ԥ��Ƶ���� PS  < 0x07
-    //  Ԥ��Ƶ���� PS ԽСʱ��ģ�� mod ��Խ�󣬼�����Խ��׼��PWM�����Ϊ׼ȷ
+    //  模数 MOD < 0x10000
+    //  预分频因子 PS  < 0x07
+    //  预分频因子 PS 越小时，模数 mod 就越大，计数就越精准，PWM输出更为准确
     //  MOD  = clk_hz/(freq*(1 << PS)) < 0x10000  ==>  clk_hz/(freq*0x10000) < (1<< PS)  ==>  (clk_hz/(freq*0x10000) >> PS) < 1
-    //  �� (((clk_hz/0x10000 )/ freq ) >> PS ) < 1
+    //  即 (((clk_hz/0x10000 )/ freq ) >> PS ) < 1
 
-    // �� CPWMS = 1 ����˫�߲�׽����Ϊ��
-    clk_hz = (bus_clk_khz * 1000) >> 1 ; // busƵ�� / 2
+    // 以 CPWMS = 1 ，即双边捕捉脉冲为例
+    clk_hz = (bus_clk_khz * 1000) >> 1 ; // bus频率 / 2
 
-    mod = (clk_hz >> 16 ) / freq ;      // ��ʱ�� mod ����һ��
+    mod = (clk_hz >> 16 ) / freq ;      // 临时用 mod 缓存一下
     ps = 0;
-    while((mod >> ps) >= 1)             // �� (mod >> ps) < 1 ���˳� while ѭ�� ������ PS ����Сֵ
+    while((mod >> ps) >= 1)             // 等 (mod >> ps) < 1 才退出 while 循环 ，即求 PS 的最小值
     {
         ps++;
     }
 
-    ASSERT(ps <= 0x07);         // ���ԣ� PS ���Ϊ 0x07 ��������ֵ���� PWMƵ�����ù��ͣ��� Bus Ƶ�ʹ���
+    ASSERT(ps <= 0x07);         // 断言， PS 最大为 0x07 ，超过此值，则 PWM频率设置过低，或 Bus 频率过高
 
-    mod = (clk_hz >> ps) / freq;// �� MOD ��ֵ
+    mod = (clk_hz >> ps) / freq;// 求 MOD 的值
 
-    switch(ftmn)                // ��ֵ CNTIN ��Ϊ0 ��������ȣ�CnV - CNTIN ���� CnV ���� ��������ˡ�
+    switch(ftmn)                // 初值 CNTIN 设为0 ，脉冲宽度：CnV - CNTIN ，即 CnV 就是 脉冲宽度了。
     {
-        // EPWM������ �� MOD - CNTIN + 0x0001 == MOD - 0 + 1
-        // �� CnV = (MOD - 0 + 1) * ռ�ձ� = (MOD - 0 + 1) * duty/ FTM_PRECISON
+        // EPWM的周期 ： MOD - CNTIN + 0x0001 == MOD - 0 + 1
+        // 则 CnV = (MOD - 0 + 1) * 占空比 = (MOD - 0 + 1) * duty/ FTM_PRECISON
     case FTM0:
         cv = (duty * (mod - 0 + 1)) / FTM0_PRECISON;
         break;
@@ -289,55 +289,55 @@ void FTM_PWM_init(FTMn_e ftmn, FTM_CHn_e ch, uint32 freq, uint32 duty)
         break;
     }
 
-    /******************** ѡ�����ģʽΪ ���ض���PWM *******************/
-    //ͨ��״̬���ƣ�����ģʽ��ѡ�� ���ػ��ƽ
+    /******************** 选择输出模式为 边沿对齐PWM *******************/
+    //通道状态控制，根据模式来选择 边沿或电平
     FTM_CnSC_REG(FTMN[ftmn], ch) &= ~FTM_CnSC_ELSA_MASK;
     FTM_CnSC_REG(FTMN[ftmn], ch)  = FTM_CnSC_MSB_MASK | FTM_CnSC_ELSB_MASK;
-    // MSnB:MSnA = 1x       ���ض���PWM
-    // ELSnB:ELSnA = 10     �ȸߺ��
-    // ELSnB:ELSnA = 11     �ȵͺ��
+    // MSnB:MSnA = 1x       边沿对齐PWM
+    // ELSnB:ELSnA = 10     先高后低
+    // ELSnB:ELSnA = 11     先低后高
 
-    /******************** ����ʱ�Ӻͷ�Ƶ ********************/
+    /******************** 配置时钟和分频 ********************/
     FTM_SC_REG(FTMN[ftmn])    = ( 0
-                                  | FTM_SC_CPWMS_MASK         //0�������ؼ���ģʽ ��1�� �����ؼ���ģʽѡ�� ��ע���˱�ʾ 0��
-                                  | FTM_SC_PS(ps)             //��Ƶ���ӣ���Ƶϵ�� = 2^PS
-                                  | FTM_SC_CLKS(1)            //ʱ��ѡ�� 0��ûѡ��ʱ�ӣ����ã� 1��bus ʱ�ӣ� 2��MCGFFCLK�� 3��EXTCLK�� ��SIM_SOPT4 ѡ������ܽ� FTM_CLKINx��
-                                  //| FTM_SC_TOIE_MASK        //����ж�ʹ�ܣ�ע���˱�ʾ ��ֹ����жϣ�
+                                  | FTM_SC_CPWMS_MASK         //0：上升沿计数模式 ，1： 跳变沿计数模式选择 （注释了表示 0）
+                                  | FTM_SC_PS(ps)             //分频因子，分频系数 = 2^PS
+                                  | FTM_SC_CLKS(1)            //时钟选择， 0：没选择时钟，禁用； 1：bus 时钟； 2：MCGFFCLK； 3：EXTCLK（ 由SIM_SOPT4 选择输入管脚 FTM_CLKINx）
+                                  //| FTM_SC_TOIE_MASK        //溢出中断使能（注释了表示 禁止溢出中断）
                                 );
-    FTM_MOD_REG(FTMN[ftmn])   = mod;                        //ģ��, EPWM������Ϊ ��MOD - CNTIN + 0x0001
-    FTM_CNTIN_REG(FTMN[ftmn]) = 0;                          //��������ʼ��ֵ������������ȣ�(CnV - CNTIN).
+    FTM_MOD_REG(FTMN[ftmn])   = mod;                        //模数, EPWM的周期为 ：MOD - CNTIN + 0x0001
+    FTM_CNTIN_REG(FTMN[ftmn]) = 0;                          //计数器初始化值。设置脉冲宽度：(CnV - CNTIN).
     FTM_CnV_REG(FTMN[ftmn], ch) = cv;
-    FTM_CNT_REG(FTMN[ftmn])   = 0;                          //��������ֻ�е�16λ���ã�д�κ�ֵ���˼Ĵ������������ CNTIN ��ֵ��
+    FTM_CNT_REG(FTMN[ftmn])   = 0;                          //计数器。只有低16位可用（写任何值到此寄存器，都会加载 CNTIN 的值）
 }
 
 /*!
- *  @brief      ����FTM ��PWM ͨ��ռ�ձ�
- *  @param      FTMn_e    ģ��ţ�FTM0��  FTM1��  FTM2��
- *  @param      FTM_CHn_e     ͨ���ţ�CH0~CH7��
- *  @param      duty    ռ�ձȷ��ӣ�ռ�ձ� = duty / FTMn_PRECISON
+ *  @brief      设置FTM 的PWM 通道占空比
+ *  @param      FTMn_e    模块号（FTM0、  FTM1、  FTM2）
+ *  @param      FTM_CHn_e     通道号（CH0~CH7）
+ *  @param      duty    占空比分子，占空比 = duty / FTMn_PRECISON
  *  @since      v5.0
- *  @note       ͬһ��FTM��PWMƵ���Ǳ���һ���ģ���ռ�ձȿɲ�һ������3��FTM�����������3����ͬƵ��PWM
- *  Sample usage:       FTM_PWM_Duty(FTM0, FTM_CH6, 10);    //���� FTM0_CH6ռ�ձ�Ϊ 10/FTM0_PRECISON
+ *  @note       同一个FTM，PWM频率是必须一样的，但占空比可不一样。共3个FTM，即可以输出3个不同频率PWM
+ *  Sample usage:       FTM_PWM_Duty(FTM0, FTM_CH6, 10);    //设置 FTM0_CH6占空比为 10/FTM0_PRECISON
  */
 void FTM_PWM_Duty(FTMn_e ftmn, FTM_CHn_e ch, uint32 duty)
 {
     uint32 cv;
     uint32 mod = 0;
 
-    ASSERT( (ftmn == FTM0) || ( (ftmn == FTM1 || ftmn == FTM2 ) && (ch <= FTM_CH1)) ); //��鴫�ݽ�����ͨ���Ƿ���ȷ
+    ASSERT( (ftmn == FTM0) || ( (ftmn == FTM1 || ftmn == FTM2 ) && (ch <= FTM_CH1)) ); //检查传递进来的通道是否正确
 
     switch(ftmn)
     {
     case FTM0:
-        ASSERT(duty <= FTM0_PRECISON);     //�ö��Լ�� ռ�ձ��Ƿ����
+        ASSERT(duty <= FTM0_PRECISON);     //用断言检测 占空比是否合理
         break;
 
     case FTM1:
-        ASSERT(duty <= FTM1_PRECISON);     //�ö��Լ�� ռ�ձ��Ƿ����
+        ASSERT(duty <= FTM1_PRECISON);     //用断言检测 占空比是否合理
         break;
 
     case FTM2:
-        ASSERT(duty <= FTM2_PRECISON);     //�ö��Լ�� ռ�ձ��Ƿ����
+        ASSERT(duty <= FTM2_PRECISON);     //用断言检测 占空比是否合理
         break;
 
     default:
@@ -345,13 +345,13 @@ void FTM_PWM_Duty(FTMn_e ftmn, FTM_CHn_e ch, uint32 duty)
     }
 
 
-    //ռ�ձ� = (CnV-CNTIN)/(MOD-CNTIN+1)
+    //占空比 = (CnV-CNTIN)/(MOD-CNTIN+1)
 
     do
     {
-        mod = FTM_MOD_REG(FTMN[ftmn]);        //��ȡ MOD ��ֵ
+        mod = FTM_MOD_REG(FTMN[ftmn]);        //读取 MOD 的值
     }
-    while(mod == 0);      //��һ�Σ�������0 ����Ҫ���ȡ���Ρ�
+    while(mod == 0);      //读一次，可能是0 ，需要多读取几次。
 
     switch(ftmn)
     {
@@ -370,78 +370,78 @@ void FTM_PWM_Duty(FTMn_e ftmn, FTM_CHn_e ch, uint32 duty)
         break;
     }
 
-    // ����FTMͨ��ֵ
+    // 配置FTM通道值
     FTM_CnV_REG(FTMN[ftmn], ch) = cv;
 
 }
 
 /*!
- *  @brief      ����FTM��Ƶ��
- *  @param      freq    Ƶ�ʣ���λΪHz��
+ *  @brief      设置FTM的频率
+ *  @param      freq    频率（单位为Hz）
  *  @since      v5.0
- *  @note       �޸�PWMƵ�ʺ󣬱������ FTM_PWM_Duty ��������ռ�ձȡ�ͬһ��ģ�飬PWMƵ�ʱ�����ͬ��
- *  Sample usage:       FTM_PWM_freq(FTM0,200);    //���� FTM0 �� Ƶ�� Ϊ 200Hz
+ *  @note       修改PWM频率后，必须调用 FTM_PWM_Duty 重新配置占空比。同一个模块，PWM频率必须相同。
+ *  Sample usage:       FTM_PWM_freq(FTM0,200);    //设置 FTM0 的 频率 为 200Hz
  */
-void FTM_PWM_freq(FTMn_e ftmn, uint32 freq)             //����FTM��Ƶ��
+void FTM_PWM_freq(FTMn_e ftmn, uint32 freq)             //设置FTM的频率
 {
-    uint32 clk_hz = (bus_clk_khz * 1000) >> 1;        //busƵ��/2
+    uint32 clk_hz = (bus_clk_khz * 1000) >> 1;        //bus频率/2
     uint32 mod;
     uint8 ps;
 
-    ASSERT( freq <= (clk_hz >> 1) );              //�ö��Լ�� Ƶ�� �Ƿ����� ,Ƶ�ʱ���С��ʱ�Ӷ���֮һ
+    ASSERT( freq <= (clk_hz >> 1) );              //用断言检测 频率 是否正常 ,频率必须小于时钟二分之一
 
-    /*       ����Ƶ������        */
-    // �� CPWMS = 1 ����˫�߲�׽����Ϊ��
-    clk_hz = (bus_clk_khz * 1000) >> 1 ; // busƵ�� / 2
+    /*       计算频率设置        */
+    // 以 CPWMS = 1 ，即双边捕捉脉冲为例
+    clk_hz = (bus_clk_khz * 1000) >> 1 ; // bus频率 / 2
 
-    mod = (clk_hz >> 16 ) / freq ;      // ��ʱ�� mod ����һ��
+    mod = (clk_hz >> 16 ) / freq ;      // 临时用 mod 缓存一下
     ps = 0;
-    while((mod >> ps) >= 1)             // �� (mod >> ps) < 1 ���˳� while ѭ�� ������ PS ����Сֵ
+    while((mod >> ps) >= 1)             // 等 (mod >> ps) < 1 才退出 while 循环 ，即求 PS 的最小值
     {
         ps++;
     }
 
-    ASSERT(ps <= 0x07);                 // ���ԣ� PS ���Ϊ 0x07 ��������ֵ���� PWMƵ�����ù��ͣ��� Bus Ƶ�ʹ���
+    ASSERT(ps <= 0x07);                 // 断言， PS 最大为 0x07 ，超过此值，则 PWM频率设置过低，或 Bus 频率过高
 
-    mod = (clk_hz >> ps) / freq;        // �� MOD ��ֵ
+    mod = (clk_hz >> ps) / freq;        // 求 MOD 的值
 
-    /******************** ����ʱ�Ӻͷ�Ƶ ********************/
+    /******************** 配置时钟和分频 ********************/
     FTM_SC_REG(FTMN[ftmn])    = ( 0
-                                  | FTM_SC_CPWMS_MASK         //0�������ؼ���ģʽ ��1�� �����ؼ���ģʽѡ�� ��ע���˱�ʾ 0��
-                                  | FTM_SC_PS(ps)             //��Ƶ���ӣ���Ƶϵ�� = 2^PS
-                                  | FTM_SC_CLKS(1)            //ʱ��ѡ�� 0��ûѡ��ʱ�ӣ����ã� 1��bus ʱ�ӣ� 2��MCGFFCLK�� 3��EXTCLK�� ��SIM_SOPT4 ѡ������ܽ� FTM_CLKINx��
-                                  //| FTM_SC_TOIE_MASK        //����ж�ʹ�ܣ�ע���˱�ʾ ��ֹ����жϣ�
+                                  | FTM_SC_CPWMS_MASK         //0：上升沿计数模式 ，1： 跳变沿计数模式选择 （注释了表示 0）
+                                  | FTM_SC_PS(ps)             //分频因子，分频系数 = 2^PS
+                                  | FTM_SC_CLKS(1)            //时钟选择， 0：没选择时钟，禁用； 1：bus 时钟； 2：MCGFFCLK； 3：EXTCLK（ 由SIM_SOPT4 选择输入管脚 FTM_CLKINx）
+                                  //| FTM_SC_TOIE_MASK        //溢出中断使能（注释了表示 禁止溢出中断）
                                 );
-    FTM_CNTIN_REG(FTMN[ftmn]) = 0;      //��������ʼ��ֵ������������ȣ�(CnV - CNTIN).
-    FTM_MOD_REG(FTMN[ftmn])   = mod;    //ģ��, EPWM������Ϊ ��MOD - CNTIN + 0x0001
-    FTM_CNT_REG(FTMN[ftmn])   = 0;      //��������ֻ�е�16λ���ã�д�κ�ֵ���˼Ĵ������������ CNTIN ��ֵ��
+    FTM_CNTIN_REG(FTMN[ftmn]) = 0;      //计数器初始化值。设置脉冲宽度：(CnV - CNTIN).
+    FTM_MOD_REG(FTMN[ftmn])   = mod;    //模数, EPWM的周期为 ：MOD - CNTIN + 0x0001
+    FTM_CNT_REG(FTMN[ftmn])   = 0;      //计数器。只有低16位可用（写任何值到此寄存器，都会加载 CNTIN 的值）
 }
 
-//////////////////////////////// ����Ϊ���PWM  //////////////////////////////////////////
+//////////////////////////////// 以上为输出PWM  //////////////////////////////////////////
 
-//////////////////////////////// ����Ϊ���벶׽ //////////////////////////////////////////
+//////////////////////////////// 以下为输入捕捉 //////////////////////////////////////////
 
 /*************************************************************************
-*                             Ұ��Ƕ��ʽ����������
+*                             野火嵌入式开发工作室
 *
-*  �������ƣ�FTM_Input_init
-*  ����˵�������벶׽��ʼ������
-*  ����˵����FTMn        ģ��ţ�FTM0��  FTM1��  FTM2��
-*            FTM_CHn_e         ͨ���ţ�CH0~CH7��
-*            Input_cfg   ���벶׽���ã�Rising��Falling��Rising_or_Falling�������ز�׽���½��ز�׽�������ز�׽
-*  �������أ���
-*  �޸�ʱ�䣺2012-1-26
-*  ��    ע��CH0~CH3����ʹ�ù�������δ�����⹦��
+*  函数名称：FTM_Input_init
+*  功能说明：输入捕捉初始化函数
+*  参数说明：FTMn        模块号（FTM0、  FTM1、  FTM2）
+*            FTM_CHn_e         通道号（CH0~CH7）
+*            Input_cfg   输入捕捉配置（Rising、Falling、Rising_or_Falling）上升沿捕捉、下降沿捕捉、跳变沿捕捉
+*  函数返回：无
+*  修改时间：2012-1-26
+*  备    注：CH0~CH3可以使用过滤器，未添加这功能
 *************************************************************************/
 void FTM_Input_init(FTMn_e ftmn, FTM_CHn_e ch, FTM_Input_cfg cfg)
 {
-    ASSERT( (ftmn == FTM0) || ( (ftmn == FTM1 || ftmn == FTM2 ) && (ch <= FTM_CH1)) ); //��鴫�ݽ�����ͨ���Ƿ���ȷ
+    ASSERT( (ftmn == FTM0) || ( (ftmn == FTM1 || ftmn == FTM2 ) && (ch <= FTM_CH1)) ); //检查传递进来的通道是否正确
 
-    /******************* ����ʱ�� �� ����IO��*******************/
+    /******************* 开启时钟 和 复用IO口*******************/
     switch(ftmn)
     {
     case FTM0:
-        SIM_SCGC6 |= SIM_SCGC6_FTM0_MASK;       //ʹ��FTM0ʱ��
+        SIM_SCGC6 |= SIM_SCGC6_FTM0_MASK;       //使能FTM0时钟
         switch(ch)
         {
         case FTM_CH0:
@@ -455,7 +455,7 @@ void FTM_Input_init(FTMn_e ftmn, FTM_CHn_e ch, FTM_Input_cfg cfg)
             }
             else
             {
-                ASSERT(0);                      //���ùܽ�����
+                ASSERT(0);                      //设置管脚有误？
             }
             break;
 
@@ -470,7 +470,7 @@ void FTM_Input_init(FTMn_e ftmn, FTM_CHn_e ch, FTM_Input_cfg cfg)
             }
             else
             {
-                ASSERT(0);                      //���ùܽ�����
+                ASSERT(0);                      //设置管脚有误？
             }
             break;
 
@@ -485,7 +485,7 @@ void FTM_Input_init(FTMn_e ftmn, FTM_CHn_e ch, FTM_Input_cfg cfg)
             }
             else
             {
-                ASSERT(0);                      //���ùܽ�����
+                ASSERT(0);                      //设置管脚有误？
             }
             break;
 
@@ -500,7 +500,7 @@ void FTM_Input_init(FTMn_e ftmn, FTM_CHn_e ch, FTM_Input_cfg cfg)
             }
             else
             {
-                ASSERT(0);                      //���ùܽ�����
+                ASSERT(0);                      //设置管脚有误？
             }
             break;
 
@@ -515,7 +515,7 @@ void FTM_Input_init(FTMn_e ftmn, FTM_CHn_e ch, FTM_Input_cfg cfg)
             }
             else
             {
-                ASSERT(0);                      //���ùܽ�����
+                ASSERT(0);                      //设置管脚有误？
             }
             break;
 
@@ -530,7 +530,7 @@ void FTM_Input_init(FTMn_e ftmn, FTM_CHn_e ch, FTM_Input_cfg cfg)
             }
             else
             {
-                ASSERT(0);                      //���ùܽ�����
+                ASSERT(0);                      //设置管脚有误？
             }
             break;
 
@@ -545,7 +545,7 @@ void FTM_Input_init(FTMn_e ftmn, FTM_CHn_e ch, FTM_Input_cfg cfg)
             }
             else
             {
-                ASSERT(0);                      //���ùܽ�����
+                ASSERT(0);                      //设置管脚有误？
             }
             break;
 
@@ -560,7 +560,7 @@ void FTM_Input_init(FTMn_e ftmn, FTM_CHn_e ch, FTM_Input_cfg cfg)
             }
             else
             {
-                ASSERT(0);                      //���ùܽ�����
+                ASSERT(0);                      //设置管脚有误？
             }
             break;
         default:
@@ -569,7 +569,7 @@ void FTM_Input_init(FTMn_e ftmn, FTM_CHn_e ch, FTM_Input_cfg cfg)
         break;
 
     case FTM1:
-        SIM_SCGC6 |= SIM_SCGC6_FTM1_MASK;       //ʹ��FTM1ʱ��
+        SIM_SCGC6 |= SIM_SCGC6_FTM1_MASK;       //使能FTM1时钟
         switch(ch)
         {
         case FTM_CH0:
@@ -579,7 +579,7 @@ void FTM_Input_init(FTMn_e ftmn, FTM_CHn_e ch, FTM_Input_cfg cfg)
             }
             else
             {
-                ASSERT(0);                      //���ùܽ�����
+                ASSERT(0);                      //设置管脚有误？
             }
             break;
 
@@ -591,7 +591,7 @@ void FTM_Input_init(FTMn_e ftmn, FTM_CHn_e ch, FTM_Input_cfg cfg)
             }
             else
             {
-                ASSERT(0);                      //���ùܽ�����
+                ASSERT(0);                      //设置管脚有误？
             }
             break;
 
@@ -601,7 +601,7 @@ void FTM_Input_init(FTMn_e ftmn, FTM_CHn_e ch, FTM_Input_cfg cfg)
         break;
 
     case FTM2:
-        SIM_SCGC3 |= SIM_SCGC3_FTM2_MASK;                           //ʹ��FTM2ʱ��
+        SIM_SCGC3 |= SIM_SCGC3_FTM2_MASK;                           //使能FTM2时钟
         switch(ch)
         {
         case FTM_CH0:
@@ -611,7 +611,7 @@ void FTM_Input_init(FTMn_e ftmn, FTM_CHn_e ch, FTM_Input_cfg cfg)
             }
             else
             {
-                ASSERT(0);                      //���ùܽ�����
+                ASSERT(0);                      //设置管脚有误？
             }
             break;
 
@@ -622,7 +622,7 @@ void FTM_Input_init(FTMn_e ftmn, FTM_CHn_e ch, FTM_Input_cfg cfg)
             }
             else
             {
-                ASSERT(0);                      //���ùܽ�����
+                ASSERT(0);                      //设置管脚有误？
             }
             break;
 
@@ -634,102 +634,102 @@ void FTM_Input_init(FTMn_e ftmn, FTM_CHn_e ch, FTM_Input_cfg cfg)
         break;
     }
 
-    /******************* ����Ϊ���벶׽���� *******************/
+    /******************* 设置为输入捕捉功能 *******************/
     switch(cfg)
     {
-        //���벶׽ģʽ�£�DECAPEN = 0 �� DECAPEN = 0 ��CPWMS = 0�� MSnB:MSnA = 0
+        //输入捕捉模式下：DECAPEN = 0 ， DECAPEN = 0 ，CPWMS = 0， MSnB:MSnA = 0
 
         // ELSnB:ELSnA         1          10          11
-        // ����             ������      �½���      ������
+        // 配置             上升沿      下降沿      跳变沿
 
-    case FTM_Rising:    //�����ش���
-        FTM_CnSC_REG(FTMN[ftmn], ch) |=  ( FTM_CnSC_ELSA_MASK  | FTM_CnSC_CHIE_MASK );                   //��1
-        FTM_CnSC_REG(FTMN[ftmn], ch) &= ~( FTM_CnSC_ELSB_MASK  | FTM_CnSC_MSB_MASK | FTM_CnSC_MSA_MASK); //��0
+    case FTM_Rising:    //上升沿触发
+        FTM_CnSC_REG(FTMN[ftmn], ch) |=  ( FTM_CnSC_ELSA_MASK  | FTM_CnSC_CHIE_MASK );                   //置1
+        FTM_CnSC_REG(FTMN[ftmn], ch) &= ~( FTM_CnSC_ELSB_MASK  | FTM_CnSC_MSB_MASK | FTM_CnSC_MSA_MASK); //清0
         break;
 
-    case FTM_Falling:   //�½��ش���
-        FTM_CnSC_REG(FTMN[ftmn], ch) |= (FTM_CnSC_ELSB_MASK  | FTM_CnSC_CHIE_MASK );                    //��1
-        FTM_CnSC_REG(FTMN[ftmn], ch) &= ~( FTM_CnSC_ELSA_MASK | FTM_CnSC_MSB_MASK | FTM_CnSC_MSA_MASK); //��0
+    case FTM_Falling:   //下降沿触发
+        FTM_CnSC_REG(FTMN[ftmn], ch) |= (FTM_CnSC_ELSB_MASK  | FTM_CnSC_CHIE_MASK );                    //置1
+        FTM_CnSC_REG(FTMN[ftmn], ch) &= ~( FTM_CnSC_ELSA_MASK | FTM_CnSC_MSB_MASK | FTM_CnSC_MSA_MASK); //清0
         break;
 
-    case FTM_Rising_or_Falling: //�����ء��½��ض�����
-        FTM_CnSC_REG(FTMN[ftmn], ch) |=  ( FTM_CnSC_ELSB_MASK | FTM_CnSC_ELSA_MASK  | FTM_CnSC_CHIE_MASK ); //��1
-        FTM_CnSC_REG(FTMN[ftmn], ch) &= ~( FTM_CnSC_MSB_MASK  | FTM_CnSC_MSA_MASK); //��0
+    case FTM_Rising_or_Falling: //上升沿、下降沿都触发
+        FTM_CnSC_REG(FTMN[ftmn], ch) |=  ( FTM_CnSC_ELSB_MASK | FTM_CnSC_ELSA_MASK  | FTM_CnSC_CHIE_MASK ); //置1
+        FTM_CnSC_REG(FTMN[ftmn], ch) &= ~( FTM_CnSC_MSB_MASK  | FTM_CnSC_MSA_MASK); //清0
         break;
     }
 
-    FTM_SC_REG(FTMN[ftmn]) = FTM_SC_CLKS(0x1);       //ѡ�� bus ʱ��
+    FTM_SC_REG(FTMN[ftmn]) = FTM_SC_CLKS(0x1);       //选择 bus 时钟
 
-    FTM_MODE_REG(FTMN[ftmn])    |= FTM_MODE_WPDIS_MASK; //��ֹд����
+    FTM_MODE_REG(FTMN[ftmn])    |= FTM_MODE_WPDIS_MASK; //禁止写保护
     FTM_COMBINE_REG(FTMN[ftmn]) = 0;
-    FTM_MODE_REG(FTMN[ftmn])    &= ~FTM_MODE_FTMEN_MASK;    //ʹ��FTM
+    FTM_MODE_REG(FTMN[ftmn])    &= ~FTM_MODE_FTMEN_MASK;    //使能FTM
     FTM_CNTIN_REG(FTMN[ftmn])   = 0;
 
-    FTM_STATUS_REG(FTMN[ftmn])  = 0x00;               //���жϱ�־λ
+    FTM_STATUS_REG(FTMN[ftmn])  = 0x00;               //清中断标志位
 
-    //�������벶׽�ж�
+    //开启输入捕捉中断
     //enable_irq(FTM0_IRQn + ftmn);
 }
 
 /*!
- *  @brief      FTM�����жϷ�����
+ *  @brief      FTM测试中断服务函数
  *  @since      v5.0
- *  @warning    �˺�����Ҫ�û������Լ�������ɣ�����������ṩһ��ģ��
- *  Sample usage:       set_vector_handler(FTM0_IRQn , FTM1_Input_test_handler);    //�� FTM1_Input_test_handler �������ӵ��ж�������������Ҫ�����ֶ�����
+ *  @warning    此函数需要用户根据自己需求完成，这里仅仅是提供一个模版
+ *  Sample usage:       set_vector_handler(FTM0_IRQn , FTM1_Input_test_handler);    //把 FTM1_Input_test_handler 函数添加到中断向量表，不需要我们手动调用
  */
 void FTM1_Input_test_handler(void)
 {
-    uint8 s = FTM1_STATUS;             //��ȡ��׽�ͱȽ�״̬  All CHnF bits can be checked using only one read of STATUS.
+    uint8 s = FTM1_STATUS;             //读取捕捉和比较状态  All CHnF bits can be checked using only one read of STATUS.
     uint8 CHn;
 
-    FTM1_STATUS = 0x00;             //���жϱ�־λ
+    FTM1_STATUS = 0x00;             //清中断标志位
 
     CHn = 0;
     if( s & (1 << CHn) )
     {
-        //FTM_IRQ_DIS(FTM1, CHn);     //��ֹ���벶׽�ж�
-        /*     �û�����       */
+        //FTM_IRQ_DIS(FTM1, CHn);     //禁止输入捕捉中断
+        /*     用户任务       */
 
         /*********************/
-        //FTM_IRQ_EN(FTM1, CHn); //�������벶׽�ж�
+        //FTM_IRQ_EN(FTM1, CHn); //开启输入捕捉中断
 
     }
 
-    /* �������� n=1 ��ģ�棬����ģ�������� */
+    /* 这里添加 n=1 的模版，根据模版来添加 */
     CHn = 1;
     if( s & (1 << CHn) )
     {
-        //FTM_IRQ_EN(FTM1, CHn); //�������벶׽�ж�
-        /*     �û�����       */
+        //FTM_IRQ_EN(FTM1, CHn); //开启输入捕捉中断
+        /*     用户任务       */
 
 
         /*********************/
-        //�����������￪�����벶׽�ж�
-        //FTM_IRQ_EN(FTM1, CHn); //�������벶׽�ж�
+        //不建议在这里开启输入捕捉中断
+        //FTM_IRQ_EN(FTM1, CHn); //开启输入捕捉中断
     }
 }
 
-//////////////////////////////// ����Ϊ���벶׽  //////////////////////////////////////////
+//////////////////////////////// 以上为输入捕捉  //////////////////////////////////////////
 
-//////////////////////////////// ����Ϊ�������� //////////////////////////////////////////
+//////////////////////////////// 以下为正交解码 //////////////////////////////////////////
 
 /*!
- *  @brief      ��ʼ��FTM ���������� ����
- *  @param      FTMn_e    ģ��ţ� FTM1��  FTM2��
+ *  @brief      初始化FTM 的正交解码 功能
+ *  @param      FTMn_e    模块号（ FTM1、  FTM2）
  *  @since      v5.0
- *  Sample usage:       FTM_QUAD_Init(FTM1);    //��ʼ�� FTM1 Ϊ��������ģʽ
+ *  Sample usage:       FTM_QUAD_Init(FTM1);    //初始化 FTM1 为正交解码模式
  */
 void FTM_QUAD_Init(FTMn_e ftmn)
 {
+    ASSERT( (ftmn == FTM1) || (ftmn == FTM2 ) ); //检查传递进来的通道是否正确
 
-
-    /******************* ����ʱ�� �� ����IO��*******************/
+    /******************* 开启时钟 和 复用IO口*******************/
     switch(ftmn)
     {
 
     case FTM1:
-        SIM_SCGC6 |= SIM_SCGC6_FTM1_MASK;       //ʹ��FTM1ʱ��
-        if(FTM1_QDPHA == PTA8)                  //�ܽŸ���
+        SIM_SCGC6 |= SIM_SCGC6_FTM1_MASK;       //使能FTM1时钟
+        if(FTM1_QDPHA == PTA8)                  //管脚复用
         {
             port_init(FTM1_QDPHA, ALT6);
         }
@@ -743,7 +743,7 @@ void FTM_QUAD_Init(FTMn_e ftmn)
         }
         else
         {
-            ASSERT(0);                          //���ԣ����õĹܽŲ�����Ҫ��
+            ASSERT(0);                          //断言，配置的管脚不符合要求
         }
 
         if(FTM1_QDPHB == PTA9)
@@ -760,13 +760,13 @@ void FTM_QUAD_Init(FTMn_e ftmn)
         }
         else
         {
-            ASSERT(0);                          //���ԣ����õĹܽŲ�����Ҫ��
+            ASSERT(0);                          //断言，配置的管脚不符合要求
         }
         break;
 
     case FTM2:
-        SIM_SCGC3 |= SIM_SCGC3_FTM2_MASK;                           //ʹ��FTM2ʱ��
-        if(FTM2_QDPHA == PTA10)                  //�ܽŸ���
+        SIM_SCGC3 |= SIM_SCGC3_FTM2_MASK;                           //使能FTM2时钟
+        if(FTM2_QDPHA == PTA10)                  //管脚复用
         {
             port_init(FTM2_QDPHA, ALT6);
         }
@@ -776,10 +776,10 @@ void FTM_QUAD_Init(FTMn_e ftmn)
         }
         else
         {
-            ASSERT(0);                          //���ԣ����õĹܽŲ�����Ҫ��
+            ASSERT(0);                          //断言，配置的管脚不符合要求
         }
 
-        if(FTM2_QDPHB == PTA11)                  //�ܽŸ���
+        if(FTM2_QDPHB == PTA11)                  //管脚复用
         {
             port_init(FTM2_QDPHB, ALT6);
         }
@@ -789,17 +789,17 @@ void FTM_QUAD_Init(FTMn_e ftmn)
         }
         else
         {
-            ASSERT(0);                          //���ԣ����õĹܽŲ�����Ҫ��
+            ASSERT(0);                          //断言，配置的管脚不符合要求
         }
         break;
     default:
-        ASSERT(0);                              //���ԣ����õ�ģ������
+        ASSERT(0);                              //断言，配置的模块有误
         break;
     }
 
     FTM_MODE_REG(FTMN[ftmn])  |=    (0
-                                     | FTM_MODE_WPDIS_MASK  //д������ֹ
-                                     //| FTM_MODE_FTMEN_MASK   //ʹ�� FTM
+                                     | FTM_MODE_WPDIS_MASK  //写保护禁止
+                                     //| FTM_MODE_FTMEN_MASK   //使能 FTM
                                     );
     FTM_QDCTRL_REG(FTMN[ftmn]) |=   (0
                                     | FTM_QDCTRL_QUADMODE_MASK
@@ -810,35 +810,35 @@ void FTM_QUAD_Init(FTMn_e ftmn)
                                     | FTM_QDCTRL_QUADEN_MASK
                                      );
     FTM_MODE_REG(FTMN[ftmn])  |= FTM_QDCTRL_QUADEN_MASK;
-    FTM_CNT_REG(FTMN[ftmn])     = 0;                    //��������ֻ�е�16λ���ã�д�κ�ֵ���˼Ĵ������������ CNTIN ��ֵ��
+    FTM_CNT_REG(FTMN[ftmn])     = 0;                    //计数器。只有低16位可用（写任何值到此寄存器，都会加载 CNTIN 的值）
 }
 
 /*!
- *  @brief      ��ȡFTM �������� ��������
- *  @param      FTMn_e    ģ��ţ� FTM1��  FTM2��
+ *  @brief      获取FTM 正交解码 的脉冲数
+ *  @param      FTMn_e    模块号（ FTM1、  FTM2）
  *  @since      v5.0
- *  Sample usage:       int16 count = FTM_QUAD_get(FTM1);    //��ȡ  FTM1 ������ ��������
+ *  Sample usage:       int16 count = FTM_QUAD_get(FTM1);    //获取  FTM1 交解码 的脉冲数
  */
 int16 FTM_QUAD_get(FTMn_e ftmn)
 {
     int16 val;
-    ASSERT( (ftmn == FTM1) || (ftmn == FTM2 ) );        //��鴫�ݽ�����ͨ���Ƿ���ȷ
+    ASSERT( (ftmn == FTM1) || (ftmn == FTM2 ) );        //检查传递进来的通道是否正确
     val = FTM_CNT_REG(FTMN[ftmn]);
 
     return val;
 }
 
 /*!
- *  @brief      �� FTM �������� ��������
- *  @param      FTMn_e    ģ��ţ� FTM1��  FTM2��
+ *  @brief      清 FTM 正交解码 的脉冲数
+ *  @param      FTMn_e    模块号（ FTM1、  FTM2）
  *  @since      v5.0
- *  Sample usage:       FTM_QUAD_clean(FTM1);    //��λ FTM1 �������� ��������
+ *  Sample usage:       FTM_QUAD_clean(FTM1);    //复位 FTM1 正交解码 的脉冲数
  */
 void FTM_QUAD_clean(FTMn_e ftmn)
 {
-    ASSERT( (ftmn == FTM1) || (ftmn == FTM2 ) ); //��鴫�ݽ�����ͨ���Ƿ���ȷ
+    ASSERT( (ftmn == FTM1) || (ftmn == FTM2 ) ); //检查传递进来的通道是否正确
 
-    FTM_CNT_REG(FTMN[ftmn])     = 0;             //��������ֻ�е�16λ���ã�д�κ�ֵ���˼Ĵ������������ CNTIN ��ֵ��
+    FTM_CNT_REG(FTMN[ftmn])     = 0;             //计数器。只有低16位可用（写任何值到此寄存器，都会加载 CNTIN 的值）
 }
 
 

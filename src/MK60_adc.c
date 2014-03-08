@@ -112,18 +112,6 @@ void adc_init(ADCn_Ch_e adcn_ch)
     case ADC1_SE7a:      // PTE3
         port_init(PTE3, ALT0);
         break;
-    case ADC1_SE4b:      // PTC8
-		port_init(PTC8, ALT0);
-		break;
-	case ADC1_SE5b:      // PTC9
-		port_init(PTC9, ALT0);
-		break;
-	case ADC1_SE6b:      // PTC10
-		port_init(PTC10, ALT0);
-		break;
-	case ADC1_SE7b:      // PTC11
-		port_init(PTC11, ALT0);
-		break;
 
     case ADC1_SE8:       // PTB0
         port_init(PTB0, ALT0);
@@ -213,7 +201,7 @@ void adc_start(ADCn_Ch_e adcn_ch, ADC_nbit bit)
                                );
 
 
-    ADC_CFG2_REG(ADCN[adcn])  = (1
+    ADC_CFG2_REG(ADCN[adcn])  = (0
                                  //| ADC_CFG2_MUXSEL_MASK       //ADC复用选择,0为a通道，1为b通道。
                                  //| ADC_CFG2_ADACKEN_MASK      //异步时钟输出使能,0为禁止，1为使能。
                                  | ADC_CFG2_ADHSC_MASK          //高速配置,0为正常转换序列，1为高速转换序列

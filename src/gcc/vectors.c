@@ -196,6 +196,16 @@ void SetIsr(VECTORn_t vector, tIsrFunc handler)
 	__vect_ram.__fun[vector - 1] = handler;
 }
 
+void EnableIsr(VECTORn_t vector)
+{
+	NVIC_EnableIRQ(vector - (DMA0_VECTORn - DMA0_IRQn));
+}
+
+void DisableIsr(VECTORn_t vector)
+{
+	NVIC_DisableIRQ(vector - (DMA0_VECTORn - DMA0_IRQn));
+}
+
 void DefaultIsr(void)
 {
 	LOG_W("Unhandled interrupt (VECTORn_t == %d)\n",
