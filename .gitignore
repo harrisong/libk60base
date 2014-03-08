@@ -1,0 +1,12 @@
+.settings/
+test/
+Unix-Debug/
+Unix-Release/
+WTF/
+.cproject
+.project
+libsmartcar-2013.a
+libsmartcar-inno.a
+libsmartcard-2013.a
+libsmartcard-inno.a
+Release/
