@@ -70,10 +70,10 @@ typedef enum
     ADC1_SE6a,      // PTE2
     ADC1_SE7a,      // PTE3
 
-    ADC1_SE4b = ADC1_SE4a,  // PTC8     不支持软件ADC ,传递 ADC1_SE4b 到软件ADC函数里，会当作 ADC1_SE4a 处理。
-    ADC1_SE5b = ADC1_SE5a,  // PTC9     不支持软件ADC
-    ADC1_SE6b = ADC1_SE6a,  // PTC10    不支持软件ADC
-    ADC1_SE7b = ADC1_SE7a,  // PTC11    不支持软件ADC
+    ADC1_SE4b,  // PTC8     不支持软件ADC ,传递 ADC1_SE4b 到软件ADC函数里，会当作 ADC1_SE4a 处理。
+    ADC1_SE5b,  // PTC9     不支持软件ADC
+    ADC1_SE6b,  // PTC10    不支持软件ADC
+    ADC1_SE7b,  // PTC11    不支持软件ADC
 
     ADC1_SE8,       // PTB0
     ADC1_SE9,       // PTB1
