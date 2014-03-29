@@ -42,8 +42,8 @@ typedef enum MSmode
 
 
 uint32  i2c_init(I2Cn_e i2cn, uint32 baud);                               //初始化I2C
-void    i2c_write_reg(I2Cn_e, uint8 SlaveID, uint8 reg, uint8 Data);      //往地址里的写内容
-uint8   i2c_read_reg (I2Cn_e, uint8 SlaveID, uint8 reg);                  //从地址里读取内容
+void    i2c_write_reg(I2Cn_e, uint8_t SlaveID, uint8_t reg, uint8_t Data);      //往地址里的写内容
+uint8_t   i2c_read_reg (I2Cn_e, uint8_t SlaveID, uint8_t reg);                  //从地址里读取内容
 
 #ifdef __cplusplus
 	}

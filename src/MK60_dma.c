@@ -32,7 +32,7 @@
  *  @since      v5.0
  *  @note       DMA PTXn触发源默认上升沿触发传输，若需修改，则初始化后调用 port_init 配置DMA 触发方式
                 初始化后，需要调用 DMA_EN 来实现
- *  Sample usage:   uint8 buff[10];
+ *  Sample usage:   uint8_t buff[10];
                     dma_portx2buff_init(DMA_CH0, PTB_B0_IN, buff, PTA7, DMA_BYTE1, 10, DADDR_RECOVER);
                     //DMA初始化，源地址：PTB_B0_IN，目的地址：buff,PTA7触发(默认上升沿)，每次传输1字节，共传输 10次 ，传输结束后恢复地址
 
@@ -42,9 +42,9 @@
  */
 void dma_portx2buff_init(DMA_CHn CHn, void *SADDR, void *DADDR, PTXn_e ptxn, DMA_BYTEn byten, uint32 count, uint32 cfg)
 {
-    uint8 n, tmp;
-    uint8 BYTEs = (byten == DMA_BYTE1 ? 1 : (byten == DMA_BYTE2 ? 2 : (byten == DMA_BYTE4 ? 4 : 16 ) ) ); //计算传输字节数
-    uint8 ptx0;
+    uint8_t n, tmp;
+    uint8_t BYTEs = (byten == DMA_BYTE1 ? 1 : (byten == DMA_BYTE2 ? 2 : (byten == DMA_BYTE4 ? 4 : 16 ) ) ); //计算传输字节数
+    uint8_t ptx0;
 
     //断言，检测传递进来参数是否正确
     ASSERT(                                             //用断言检测 源地址和每次传输字节数是否正确
@@ -135,7 +135,7 @@ void dma_portx2buff_init(DMA_CHn CHn, void *SADDR, void *DADDR, PTXn_e ptxn, DMA
     //假设需要采集的位 为 0~7、8~15、16~23、24~31 ，则 上面式子对应的值 为 0、1、2、3
     //刚好是  0~7、8~15、16~23、24~31 位的地址偏移，再 * 8 就变成 0、8、16、24
 
-    n = (uint8)(((uint32)SADDR - ((uint32)(&PTA_B0_IN))) & 0x3f) * 8;       //最小的引脚号
+    n = (uint8_t)(((uint32)SADDR - ((uint32)(&PTA_B0_IN))) & 0x3f) * 8;       //最小的引脚号
 
     ptx0 += n;
     tmp = ptx0 + (BYTEs * 8 ) - 1;                                          //最大的引脚号

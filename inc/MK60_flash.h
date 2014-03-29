@@ -51,10 +51,10 @@ typedef     uint64                  FLASH_WRITE_TYPE;       //flash_write 函数
 
 __RAMFUNC    void    flash_init();                                                                               //擦除指定flash扇区
 
-__RAMFUNC    uint8   flash_erase_sector  (uint16 sectorNo);                                                      //擦除指定flash扇区
+__RAMFUNC    uint8_t   flash_erase_sector  (uint16 sectorNo);                                                      //擦除指定flash扇区
 
-__RAMFUNC    uint8   flash_write         (uint16 sectorNo, uint16 offset, FLASH_WRITE_TYPE data);                          //写入flash操作
-__RAMFUNC    uint8   flash_write_buf     (uint16 sectorNo, uint16 offset, uint16 cnt, uint8 buf[]);              //从缓存区写入flash操作
+__RAMFUNC    uint8_t   flash_write         (uint16 sectorNo, uint16 offset, FLASH_WRITE_TYPE data);                          //写入flash操作
+__RAMFUNC    uint8_t   flash_write_buf     (uint16 sectorNo, uint16 offset, uint16 cnt, uint8_t buf[]);              //从缓存区写入flash操作
 
 #define     flash_read(sectorNo,offset,type)        (*(type *)((uint32)(((sectorNo)*FLASH_SECTOR_SIZE) + (offset))))          //读取扇区
 

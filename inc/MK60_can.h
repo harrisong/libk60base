@@ -107,8 +107,8 @@ typedef struct
 
 
 void    can_init        (CANn_e cann, CAN_BAUD_e band, CAN_mode_e mode);                        //CAN 初始化
-void    can_tx          (CANn_e cann, mb_num_e nMB, CAN_USR_ID_t id, uint8 len, void *buff);    //CAN 发送数据
-void    can_rx          (CANn_e cann, mb_num_e nMB, CAN_USR_ID_t *id, uint8 *len, void *buff);  //CAN 接收数据
+void    can_tx          (CANn_e cann, mb_num_e nMB, CAN_USR_ID_t id, uint8_t len, void *buff);    //CAN 发送数据
+void    can_rx          (CANn_e cann, mb_num_e nMB, CAN_USR_ID_t *id, uint8_t *len, void *buff);  //CAN 接收数据
 
 void    can_rxbuff_enble(CANn_e cann, mb_num_e nMB, CAN_USR_ID_t id);                           //使能 CAN 接收缓冲区
 

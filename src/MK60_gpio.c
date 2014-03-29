@@ -36,7 +36,7 @@ GPIO_MemMapPtr GPIOX[PTX_MAX] = {PTA_BASE_PTR, PTB_BASE_PTR, PTC_BASE_PTR, PTD_B
  *  @since      v5.0
  *  Sample usage:       gpio_init (PTA8, GPI,0);    //初始化 PTA8 管脚为输入
  */
-void gpio_init (PTXn_e ptxn, GPIO_CFG cfg, uint8 data)
+void gpio_init (PTXn_e ptxn, GPIO_CFG cfg, uint8_t data)
 {
     //复用管脚为GPIO功能
     port_init( ptxn, ALT1);
@@ -94,7 +94,7 @@ void    gpio_ddr   (PTXn_e ptxn, GPIO_CFG cfg)
  *  @warning    务必保证数据方向为输出（DEBUG模式下，有断言进行检测）
  *  Sample usage:       gpio_set (PTA8, 1);    // PTA8 管脚 输出 1
  */
-void gpio_set (PTXn_e ptxn, uint8 data)
+void gpio_set (PTXn_e ptxn, uint8_t data)
 {
     ASSERT( BIT_GET( GPIO_PDDR_REG(GPIOX_BASE(ptxn)) , PTn(ptxn)) == GPO ); // 断言，检测 输出方向是否为输出
                                                                             // 获取 GPIO PDDR 管脚号 ，比较是否为输出
@@ -133,9 +133,9 @@ void gpio_turn (PTXn_e ptxn)
  *  @return     管脚的状态，1为高电平，0为低电平
  *  @since      v5.0
  *  @warning    务必保证数据方向为输入（DEBUG模式下，有断言进行检测）
- *  Sample usage:       uint8 pta8_data = gpio_get (PTA8);    // 获取 PTA8 管脚 输入电平
+ *  Sample usage:       uint8_t pta8_data = gpio_get (PTA8);    // 获取 PTA8 管脚 输入电平
  */
-uint8 gpio_get(PTXn_e ptxn)
+uint8_t gpio_get(PTXn_e ptxn)
 {
     ASSERT( BIT_GET( GPIO_PDDR_REG(GPIOX_BASE(ptxn)) , PTn(ptxn)) == GPI ); // 断言，检测 输出方向是否为输入
                                                                             // 获取 GPIO PDDR 管脚号 ，比较是否为输入

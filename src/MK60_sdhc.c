@@ -351,7 +351,7 @@ uint32 SDHC_cmd (pESDHC_CMD_t command) /* [IN/OUT] Command specification */
 ESDHC_IOCTL_ERR_e SDHC_ioctl(ESDHC_IOCTL_CMD_e cmd, void *param_ptr )
 {
     ESDHC_CMD_t             command;
-    uint8                   mem, io, mmc, ceata, mp, hc;
+    uint8_t                   mem, io, mmc, ceata, mp, hc;
     int32                   val;
     ESDHC_IOCTL_ERR_e                  result ;
     uint32                  *param32_ptr = param_ptr;

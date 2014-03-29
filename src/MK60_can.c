@@ -86,7 +86,7 @@ CAN_band_cfg_t can_band_cfg_60000K[CAN_BAUD_MAX] =
  */
 void can_init(CANn_e cann, CAN_BAUD_e band, CAN_mode_e mode)
 {
-    uint8 i;
+    uint8_t i;
     CAN_MemMapPtr canptr = CANN[cann];
     if(bus_clk_khz == 50000)
     {
@@ -198,7 +198,7 @@ void can_init(CANn_e cann, CAN_BAUD_e band, CAN_mode_e mode)
  *  @since      v5.0
  *  Sample usage:       can_tx(CAN1,CAN_TX_MB,can_tx_id,DATA_LEN, txbuff);  //CAN发送数据。缓冲区CAN_TX_MB，报文ID:tx_ID，数据缓冲区txbuff，长度 DATA_LEN
  */
-void can_tx(CANn_e cann, mb_num_e nMB, CAN_USR_ID_t id, uint8 len, void *buff)
+void can_tx(CANn_e cann, mb_num_e nMB, CAN_USR_ID_t id, uint8_t len, void *buff)
 {
     uint32 word;
     CAN_MemMapPtr canptr = CANN[cann];
@@ -312,7 +312,7 @@ void can_rxbuff_enble(CANn_e cann, mb_num_e nMB, CAN_USR_ID_t id)
 
 void can_rx_mask(CANn_e cann, mb_num_e nMB, uint32 mask)
 {
-    uint8           bFreezeMode;
+    uint8_t           bFreezeMode;
     CAN_MemMapPtr   canptr = CANN[cann];
 
     //进入冻结模式
@@ -377,9 +377,9 @@ void can_rx_mask(CANn_e cann, mb_num_e nMB, uint32 mask)
  *  @since      v5.0
  *  Sample usage:       can_rx(CAN1,CAN_RX_MB,&can_rx_id,&can_rx_len,can_rx_data);  //CAN 从 CAN_RX_MB 接收数据 ，接收到的 ID 保存在 can_rx_id 里，长度保存在 can_rx_len，数据保存在 can_rx_data
  */
-void can_rx(CANn_e cann, mb_num_e nMB, CAN_USR_ID_t *id, uint8 *len, void   *buff)
+void can_rx(CANn_e cann, mb_num_e nMB, CAN_USR_ID_t *id, uint8_t *len, void   *buff)
 {
-    uint8  length;
+    uint8_t  length;
     uint32 word;
 
     CAN_MemMapPtr canptr = CANN[cann];

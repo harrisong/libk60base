@@ -37,12 +37,12 @@ SPI_MemMapPtr SPIN[3] = {SPI0_BASE_PTR, SPI1_BASE_PTR, SPI2_BASE_PTR}; //定义�
  *  @since      v5.0
  *  Sample usage:       spi_init(SPI0,SPIn_PCS0, MASTER);              //初始化SPI,选择CS0,主机模式
  */
-uint32 spi_init(SPIn_e spin, SPIn_PCSn_e pcs, SPI_CFG master, uint8 flag, uint32 baud)
+uint32 spi_init(SPIn_e spin, SPIn_PCSn_e pcs, SPI_CFG master, uint8_t flag, uint32 baud)
 {
-	uint8  br,pbr;
+	uint8_t  br,pbr;
 	uint32 clk = bus_clk_khz*1000/baud;
 	uint32 Scaler[] = {2,4,6,8,16,32,64,128,256,512,1024,2048,4096,8192,16384,32768};
-	uint8  Prescaler[] = {2,3,5,7};
+	uint8_t  Prescaler[] = {2,3,5,7};
 	uint32 fit_clk,fit_br=0,fit_pbr,min_diff =~0,diff;
 	uint32 tmp;
 
@@ -224,7 +224,7 @@ SPI_CLK_EXIT:
  *  @since      v5.0
  *  Sample usage:           spi_mosi(SPI0,SPIn_PCS0,buff,buff,2);    //发送buff的内容，并接收到buff里，长度为2字节
  */
-void spi_mosi(SPIn_e spin, SPIn_PCSn_e pcs, const uint8 *modata, uint8 *midata, const uint32 len)
+void spi_mosi(SPIn_e spin, SPIn_PCSn_e pcs, const uint8_t *modata, uint8_t *midata, const uint32 len)
 {
     uint32 i = 0;
     do
@@ -261,7 +261,7 @@ void spi_mosi(SPIn_e spin, SPIn_PCSn_e pcs, const uint8 *modata, uint8 *midata, 
         while(!(SPI_SR_REG(SPIN[spin]) & SPI_SR_RFDF_MASK));        //RFDF为1，Rx FIFO is not empty.
         if(midata != NULL)
         {
-            midata[i] = (uint8)SPI_POPR_REG(SPIN[spin]);                  //保存接收到的数据
+            midata[i] = (uint8_t)SPI_POPR_REG(SPIN[spin]);                  //保存接收到的数据
         }
         else
         {
@@ -283,7 +283,7 @@ void spi_mosi(SPIn_e spin, SPIn_PCSn_e pcs, const uint8 *modata, uint8 *midata, 
     while( !(SPI_SR_REG(SPIN[spin]) & SPI_SR_RFDF_MASK));           //RFDF为1，Rx FIFO is not empty.
     if(midata != NULL)
     {
-        midata[i] = (uint8)SPI_POPR_REG(SPIN[spin]);                  //保存接收到的数据
+        midata[i] = (uint8_t)SPI_POPR_REG(SPIN[spin]);                  //保存接收到的数据
     }
     else
     {
@@ -303,7 +303,7 @@ void spi_mosi(SPIn_e spin, SPIn_PCSn_e pcs, const uint8 *modata, uint8 *midata, 
  *  @since      v5.0
  *  Sample usage:           spi_mosi(SPI0,SPIn_PCS0,cmd,NULL,buff,buff,1,2);    //发送cmd/buff的内容，不接收cmd发送时的数据，接收buff发送时的数据到buff里，长度分别为1、2字节
  */
-void spi_mosi_cmd(SPIn_e spin, SPIn_PCSn_e pcs, const uint8 *mocmd , uint8 *micmd , const uint8 *modata , uint8 *midata, const uint32 cmdlen , const uint32 len)
+void spi_mosi_cmd(SPIn_e spin, SPIn_PCSn_e pcs, const uint8_t *mocmd , uint8_t *micmd , const uint8_t *modata , uint8_t *midata, const uint32 cmdlen , const uint32 len)
 {
     uint32 i = 0;
     do
@@ -339,7 +339,7 @@ void spi_mosi_cmd(SPIn_e spin, SPIn_PCSn_e pcs, const uint8 *mocmd , uint8 *micm
         while(!(SPI_SR_REG(SPIN[spin]) & SPI_SR_RFDF_MASK));        //RFDF为1，Rx FIFO is not empty.
         if(micmd != NULL)
         {
-            micmd[i] = (uint8)SPI_POPR_REG(SPIN[spin]);             //保存接收到的数据
+            micmd[i] = (uint8_t)SPI_POPR_REG(SPIN[spin]);             //保存接收到的数据
         }
         else
         {
@@ -362,7 +362,7 @@ void spi_mosi_cmd(SPIn_e spin, SPIn_PCSn_e pcs, const uint8 *mocmd , uint8 *micm
 
         if(midata != NULL)
         {
-            midata[i] = (uint8)SPI_POPR_REG(SPIN[spin]);             //保存接收到的数据
+            midata[i] = (uint8_t)SPI_POPR_REG(SPIN[spin]);             //保存接收到的数据
         }
         else
         {
@@ -383,7 +383,7 @@ void spi_mosi_cmd(SPIn_e spin, SPIn_PCSn_e pcs, const uint8 *mocmd , uint8 *micm
     while( !(SPI_SR_REG(SPIN[spin]) & SPI_SR_RFDF_MASK));    //RFDF为1，Rx FIFO is not empty.
     if(midata != NULL)
     {
-        midata[i] = (uint8)SPI_POPR_REG(SPIN[spin]);             //保存接收到的数据
+        midata[i] = (uint8_t)SPI_POPR_REG(SPIN[spin]);             //保存接收到的数据
     }
     else
     {

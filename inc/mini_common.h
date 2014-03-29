@@ -24,7 +24,7 @@
 /*
  * 数据类型声明
  */
-typedef unsigned char       uint8;  /*  8 bits */
+typedef unsigned char       uint8_t;  /*  8 bits */
 typedef unsigned short int  uint16; /* 16 bits */
 typedef unsigned long int   uint32; /* 32 bits */
 typedef unsigned long long  uint64; /* 64 bits */
@@ -39,12 +39,12 @@ typedef volatile int16      vint16; /* 16 bits */
 typedef volatile int32      vint32; /* 32 bits */
 typedef volatile int64      vint64; /* 64 bits */
 
-typedef volatile uint8      vuint8;  /*  8 bits */
+typedef volatile uint8_t      vuint8_t;  /*  8 bits */
 typedef volatile uint16     vuint16; /* 16 bits */
 typedef volatile uint32     vuint32; /* 32 bits */
 typedef volatile uint64     vuint64; /* 64 bits */
 
-typedef uint8 Byte;
+typedef uint8_t Byte;
 typedef unsigned int Uint;
 typedef unsigned long Ulong;
 
@@ -55,7 +55,7 @@ typedef union
 {
     uint32  DW;
     uint16  W[2];
-    uint8   B[4];
+    uint8_t   B[4];
     struct
     {
         uint32 b0: 1;

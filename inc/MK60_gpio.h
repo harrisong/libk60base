@@ -41,11 +41,11 @@ extern  GPIO_MemMapPtr      GPIOX[PTX_MAX];
 
 /****************************外部使用****************************/
 
-extern void    gpio_init  (PTXn_e, GPIO_CFG, uint8 data);    //初始化gpio
+extern void    gpio_init  (PTXn_e, GPIO_CFG, uint8_t data);    //初始化gpio
 extern void    gpio_ddr   (PTXn_e, GPIO_CFG);                //设置引脚数据方向
-extern void    gpio_set   (PTXn_e,           uint8 data);    //设置引脚状态
+extern void    gpio_set   (PTXn_e,           uint8_t data);    //设置引脚状态
 extern void    gpio_turn  (PTXn_e);                          //反转引脚状态
-extern uint8   gpio_get   (PTXn_e);                          //读取引脚状态
+extern uint8_t   gpio_get   (PTXn_e);                          //读取引脚状态
 
 //如下 4个 函数 的 PTxn 只能是 宏定义，不能是 变量
 #define GPIO_SET(PTxn,data)       (PTXn_T(PTxn,OUT)= (data))    //设置输出电平

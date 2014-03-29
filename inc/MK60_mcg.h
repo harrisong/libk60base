@@ -87,21 +87,21 @@ typedef enum
 typedef struct
 {
     uint16  clk;         //
-    uint8   prdiv;       //外部晶振分频因子选项
-    uint8   vdiv;        //外部晶振倍频因子选项
+    uint8_t   prdiv;       //外部晶振分频因子选项
+    uint8_t   vdiv;        //外部晶振倍频因子选项
 } mcg_cfg_t;
 
 //时钟分频因子
 typedef struct
 {
-    uint8 core_div;    //内核时钟分频因子
-    uint8 bus_div;     //总线时钟分频因子
-    uint8 flex_div;    //flex时钟分频因子
-    uint8 flash_div;   //flash时钟分频因子
+    uint8_t core_div;    //内核时钟分频因子
+    uint8_t bus_div;     //总线时钟分频因子
+    uint8_t flex_div;    //flex时钟分频因子
+    uint8_t flash_div;   //flash时钟分频因子
 } mcg_div_t;
 
 
-uint8 pll_init(PLL_e pll);
+uint8_t pll_init(PLL_e pll);
 
 __RAMFUNC    void set_sys_dividers(uint32 outdiv1, uint32 outdiv2, uint32 outdiv3, uint32 outdiv4);
 

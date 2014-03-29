@@ -97,7 +97,7 @@ uint32 rtc_get_time(void)
                             printf("\n设置闹钟失败，不能设置过去的时间为闹钟时间!");
                         }
  */
-uint8 rtc_set_alarm(uint32 alarm)
+uint8_t rtc_set_alarm(uint32 alarm)
 {
     if(alarm < RTC_TSR)                 //闹钟时间不能为过去时间
     {
