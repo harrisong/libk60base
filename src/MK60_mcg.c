@@ -144,9 +144,9 @@ void mcg_div_count(PLL_e pll)
  *  @return     超频频率（MHz）
  *  @since      v5.0
  *  @warning    此函数只能在 复位后没进行任何频率设置情况下调用，即MCG在FEI模式下才可调用
- *  Sample usage:       uint8_t clk = pll_init(PLL100);        //超频
+ *  Sample usage:       uint8 clk = pll_init(PLL100);        //超频
  */
-uint8_t pll_init(PLL_e pll)
+uint8 pll_init(PLL_e pll)
 {
 
     mcg_div_count( pll);
@@ -208,7 +208,7 @@ __RAMFUNC  void set_sys_dividers(uint32 outdiv1, uint32 outdiv2, uint32 outdiv3,
     * can be re-enabled.
     */
     uint32 temp_reg;
-    uint8_t i;
+    uint8 i;
 
     temp_reg = FMC_PFAPR; // store present value of FMC_PFAPR
 

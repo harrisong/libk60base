@@ -103,7 +103,7 @@
  *  @return     命令执行结果(1成功，0失败)
  *  @since      v5.0
  */
-__RAMFUNC uint8_t flash_cmd()
+__RAMFUNC uint8 flash_cmd()
 {
 
 
@@ -199,7 +199,7 @@ __RAMFUNC void flash_init(void)
  *  @since      v5.0
  *  Sample usage:       flash_erase_sector(127);        //擦除扇区127
  */
-__RAMFUNC uint8_t flash_erase_sector(uint16 sector_num)
+__RAMFUNC uint8 flash_erase_sector(uint16 sector_num)
 {
     uint32 addr = sector_num * FLASH_SECTOR_SIZE;
 
@@ -238,7 +238,7 @@ __RAMFUNC uint8_t flash_erase_sector(uint16 sector_num)
  *  @since      v5.0
  *  Sample usage:       flash_write(127,0,0xFFFFFFFE);        //扇区127,偏移地址为0,写入数据:0xFFFFFFFE
  */
-__RAMFUNC uint8_t flash_write(uint16 sector_num, uint16 offset, FLASH_WRITE_TYPE data)
+__RAMFUNC uint8 flash_write(uint16 sector_num, uint16 offset, FLASH_WRITE_TYPE data)
 {
     uint32 addr = sector_num * FLASH_SECTOR_SIZE  + offset ;
     uint32 tmpdata;
@@ -301,7 +301,7 @@ __RAMFUNC uint8_t flash_write(uint16 sector_num, uint16 offset, FLASH_WRITE_TYPE
                             flash_write_buf(127,0,sizeof(buff),buff);        //扇区127,偏移地址为0,写入数据源地址:buff,数目sizeof(buff)
  */
 
-__RAMFUNC uint8_t flash_write_buf(uint16 sector_num, uint16 offset, uint16 cnt, uint8_t *buf)
+__RAMFUNC uint8 flash_write_buf(uint16 sector_num, uint16 offset, uint16 cnt, uint8 *buf)
 {
     uint32  size;
 

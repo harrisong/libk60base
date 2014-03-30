@@ -173,10 +173,10 @@ typedef enum
 
 typedef struct
 {
-    uint8_t  COMMAND;             //命令
-    uint8_t  TYPE;                //命令类型 SDHC_XFERTYP_CMDTYP
-    uint8_t  READ;
-    uint8_t  RES;                 //保留
+    uint8  COMMAND;             //命令
+    uint8  TYPE;                //命令类型 SDHC_XFERTYP_CMDTYP
+    uint8  READ;
+    uint8  RES;                 //保留
     uint32 ARGUMENT;            //命令的参数寄存器 (SDHC_CMDARG)
     uint32 BLOCKS;
     uint32 RESPONSE[4];
@@ -202,12 +202,12 @@ typedef struct
     uint32                ADDRESS;
 
     /* 高容量 = 块寻址 (SD是字节寻址，SDHC是块寻址) */
-    uint8_t                 SDHC;
+    uint8                 SDHC;
 
     /* 规范2或更高版本的卡 = 不同的CSD寄存器        */
-    uint8_t                 VERSION2;
+    uint8                 VERSION2;
 
-    uint8_t                 RES[2];
+    uint8                 RES[2];
 
 } SDCARD_t, *pSDCARD_t;
 

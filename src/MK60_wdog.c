@@ -77,11 +77,11 @@ void wdog_feed(void)
     //WDOG_REFRESH 寄存器里描述，连续向此寄存器写入0xA602 、0xB480即可解锁，
     //中间不得超过20个时钟周期，因此需要先关总中断
 #if  (defined(__ICCARM__) || defined(__CC_ARM))
-    uint8_t tmp = __get_BASEPRI();        //__get_BASEPRI 是 IAR 自带 intrinsics.h 里定义 ，用于获取 中断状态(MDK也支持)
+    uint8 tmp = __get_BASEPRI();        //__get_BASEPRI 是 IAR 自带 intrinsics.h 里定义 ，用于获取 中断状态(MDK也支持)
     //用于返回寄存器 PRIMASK 的值(1bit)
     //1表示关中断，0表示开中断
 #else
-    uint8_t tmp = 0;                      //默认表示开中断
+    uint8 tmp = 0;                      //默认表示开中断
 #endif
 
     //关闭总中断，否则有可能没法在 20个周期内连续写入 WDOG_UNLOCK
@@ -109,11 +109,11 @@ void wdog_unlock(void)
     //WDOG_UNLOCK 寄存器里描述，连续向此寄存器写入0xC520、0xD928即可解锁，
     //中间不得超过20个时钟周期，因此需要先关总中断
 #if  (defined(__ICCARM__) || defined(__CC_ARM))
-    uint8_t tmp = __get_BASEPRI();        //__get_BASEPRI 是 IAR 自带 intrinsics.h 里定义 ，用于获取 中断状态(MDK也支持)
+    uint8 tmp = __get_BASEPRI();        //__get_BASEPRI 是 IAR 自带 intrinsics.h 里定义 ，用于获取 中断状态(MDK也支持)
     //用于返回寄存器 PRIMASK 的值(1bit)
     //1表示关中断，0表示开中断
 #else
-    uint8_t tmp = 0;                      //默认表示开中断
+    uint8 tmp = 0;                      //默认表示开中断
 #endif
 
 

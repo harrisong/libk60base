@@ -131,7 +131,7 @@ uint32 i2c_init(I2Cn_e i2cn, uint32 baud)
         640, 768, 896, 1024, 1152, 1280, 1536, 1920, 1280, 1536, 1792, 2048, 2304, 2560, 3072, 3840
     };
 
-    uint8_t mult;
+    uint8 mult;
     if(bus_clk_khz <= 50000)mult = 0;         //bus 一分频
     else  if(bus_clk_khz <= 100000)mult = 1;  //bus 二分频
     else      mult = 2;                       //bus 四分频
@@ -139,7 +139,7 @@ uint32 i2c_init(I2Cn_e i2cn, uint32 baud)
     uint16 scldiv =  bus_clk_khz * 1000 / ( (mult + 1) * baud );  //最佳的分频系数
 
     //需要从 ICR_2_SCL_divider 里找到 与最佳分频系数scldiv最相近的 分频系数
-    uint8_t icr, n = 0x40;
+    uint8 icr, n = 0x40;
     uint16 min_Dvalue = ~0, Dvalue;
 
     while(n)                                            //循环里逐个扫描，找出最接近的 分频系数
@@ -196,13 +196,13 @@ void Pause(void)
  *  @param      reg         从机寄存器地址
  *  @return                 读取的寄存器值
  *  @since      v5.0
- *  Sample usage:       uint8_t value = i2c_read_reg(I2C0, 0x1D, 1);
+ *  Sample usage:       uint8 value = i2c_read_reg(I2C0, 0x1D, 1);
  */
-uint8_t i2c_read_reg(I2Cn_e i2cn, uint8_t SlaveID, uint8_t reg)
+uint8 i2c_read_reg(I2Cn_e i2cn, uint8 SlaveID, uint8 reg)
 {
 
     //先写入寄存器地址,再读取数据,因此此过程是 I2C 的复合格式,改变数据方向时需要重新启动
-    uint8_t result;
+    uint8 result;
 
     ASSERT((SlaveID & 0x80) == 0);                      //断言，我们要求的7位地址的值仅仅是7bit,不是通信时要求的高7位
     //有些手册，给出的7位地址指的是8bit里的高7位
@@ -243,7 +243,7 @@ uint8_t i2c_read_reg(I2Cn_e i2cn, uint8_t SlaveID, uint8_t reg)
  *  Sample usage:       i2c_write_reg(I2C0, 0x1D, 1,2);     //向从机0x1D 的寄存器 1 写入数据 2
  */
 
-void i2c_write_reg(I2Cn_e i2cn, uint8_t SlaveID, uint8_t reg, uint8_t Data)
+void i2c_write_reg(I2Cn_e i2cn, uint8 SlaveID, uint8 reg, uint8 Data)
 {
 
     i2c_Start(i2cn);                                    //发送启动信号

@@ -26,7 +26,7 @@ extern void     rtc_init(void);                         //初始化
 extern void     rtc_set_time(uint32 seconds);           //设置时间
 extern uint32   rtc_get_time(void);                     //获取时间
 
-extern uint8_t    rtc_set_alarm(uint32 alarm);            //设置闹钟
+extern uint8    rtc_set_alarm(uint32 alarm);            //设置闹钟
 extern void     rtc_close_alarm(void);                  //关闭闹钟
 
 #ifdef __cplusplus

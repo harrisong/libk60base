@@ -32,8 +32,8 @@ static void     adc_start   (ADCn_Ch_e, ADC_nbit);    //开始adc转换
 void adc_init(ADCn_Ch_e adcn_ch)
 {
 
-    uint8_t adcn = adcn_ch >> 5 ;
-    //uint8_t ch = adcn_ch & 0x1F;
+    uint8 adcn = adcn_ch >> 5 ;
+    //uint8 ch = adcn_ch & 0x1F;
 
     switch(adcn)
     {
@@ -201,7 +201,7 @@ uint16 adc_once(ADCn_Ch_e adcn_ch, ADC_nbit bit) //采集某路模拟量的AD值
 void adc_start(ADCn_Ch_e adcn_ch, ADC_nbit bit)
 {
     ADCn_e adcn = (ADCn_e)(adcn_ch >> 5) ;
-    uint8_t ch = (uint8_t)(adcn_ch & 0x1F);
+    uint8 ch = (uint8)(adcn_ch & 0x1F);
 
     //初始化ADC默认配置
     ADC_CFG1_REG(ADCN[adcn]) = (0

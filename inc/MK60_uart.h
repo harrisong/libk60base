@@ -52,7 +52,7 @@ extern char uart_query    (UARTn_e);                          //查询是否接�
 
 //发送相关代码
 extern void uart_putchar   (UARTn_e, char ch);                 //发送1个字节
-extern void uart_putbuff   (UARTn_e , const uint8_t *buff, uint32 len);//发送len个字节buff
+extern void uart_putbuff   (UARTn_e , const uint8 *buff, uint32 len);//发送len个字节buff
 extern void uart_putstr    (UARTn_e , const char *str);       //发送字符串
 
 

@@ -37,7 +37,7 @@
 #define EnableInterrupts                asm(" CPSIE i");            //使能全部中断
 #define DisableInterrupts               asm(" CPSID i");            //禁止全部中断
 
-void fire_cpy( uint8_t *dst, uint8_t *src, uint32 count);
+void fire_cpy( uint8 *dst, uint8 *src, uint32 count);
 
 #ifdef __cplusplus
 	}

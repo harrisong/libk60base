@@ -33,7 +33,7 @@ UART_MemMapPtr UARTN[UART_MAX] = {UART0_BASE_PTR, UART1_BASE_PTR, UART2_BASE_PTR
 void uart_init (UARTn_e uartn, uint32 baud)
 {
     register uint16 sbr, brfa;
-    uint8_t temp;
+    uint8 temp;
     uint32 sysclk;     //时钟
 
     /* 配置 UART功能的 复用管脚 */
@@ -427,7 +427,7 @@ void uart_putchar (UARTn_e uartn, char ch)
     while(!(UART_S1_REG(UARTN[uartn]) & UART_S1_TDRE_MASK));
 
     //发送数据
-    UART_D_REG(UARTN[uartn]) = (uint8_t)ch;
+    UART_D_REG(UARTN[uartn]) = (uint8)ch;
 }
 
 /*!
@@ -464,7 +464,7 @@ char uart_query (UARTn_e uartn)
  *  @since      v5.0
  *  Sample usage:       uart_putbuff (UART3,"1234567", 3); //实际发送了3个字节'1','2','3'
  */
-void uart_putbuff (UARTn_e uartn, const uint8_t *buff, uint32 len)
+void uart_putbuff (UARTn_e uartn, const uint8 *buff, uint32 len)
 {
     while(len--)
     {

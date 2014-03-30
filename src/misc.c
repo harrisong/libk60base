@@ -54,7 +54,7 @@ void set_vector_handler(VECTORn_t vector , void pfunc_handler(void))
 }
 */
 
-void fire_cpy( uint8_t *dst, uint8_t *src, uint32 count)
+void fire_cpy( uint8 *dst, uint8 *src, uint32 count)
 {
     uint32 n;
     if(count != 0)

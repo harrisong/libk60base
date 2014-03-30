@@ -40,7 +40,7 @@ void FTM_PWM_init(FTMn_e ftmn, FTM_CHn_e ch, uint32 freq, uint32 duty)
 {
     uint32 clk_hz ;
     uint16 mod;
-    uint8_t  ps;
+    uint8  ps;
     uint16 cv;
 
     ASSERT( (ftmn == FTM0) || ( (ftmn == FTM1 || ftmn == FTM2 ) && (ch <= FTM_CH1))   );  //检查传递进来的通道是否正确
@@ -386,7 +386,7 @@ void FTM_PWM_freq(FTMn_e ftmn, uint32 freq)             //设置FTM的频率
 {
     uint32 clk_hz = (bus_clk_khz * 1000) >> 1;        //bus频率/2
     uint32 mod;
-    uint8_t ps;
+    uint8 ps;
 
     ASSERT( freq <= (clk_hz >> 1) );              //用断言检测 频率 是否正常 ,频率必须小于时钟二分之一
 
@@ -679,8 +679,8 @@ void FTM_Input_init(FTMn_e ftmn, FTM_CHn_e ch, FTM_Input_cfg cfg)
  */
 void FTM1_Input_test_handler(void)
 {
-    uint8_t s = FTM1_STATUS;             //读取捕捉和比较状态  All CHnF bits can be checked using only one read of STATUS.
-    uint8_t CHn;
+    uint8 s = FTM1_STATUS;             //读取捕捉和比较状态  All CHnF bits can be checked using only one read of STATUS.
+    uint8 CHn;
 
     FTM1_STATUS = 0x00;             //清中断标志位
 

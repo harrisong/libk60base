@@ -50,11 +50,11 @@ typedef enum
 #define SPI_MISO_FLAG 0x2
 
 
-uint32 spi_init       (SPIn_e, SPIn_PCSn_e , SPI_CFG, uint8_t flag, uint32 baud);                                        //SPI初始化，设置模式
+uint32 spi_init       (SPIn_e, SPIn_PCSn_e , SPI_CFG, uint8 flag, uint32 baud);                                        //SPI初始化，设置模式
 
 //主机接收发送函数
-void spi_mosi       (SPIn_e spin, SPIn_PCSn_e pcs, const uint8_t *modata, uint8_t *midata, const uint32 len);    //SPI发送接收函数,发送databuff数据，并把接收到的数据存放在databuff里(注意，会覆盖原来的databuff)
-void spi_mosi_cmd   (SPIn_e spin, SPIn_PCSn_e pcs, const uint8_t *mocmd , uint8_t *micmd , const uint8_t *modata, uint8_t *midata, const uint32 cmdlen , const uint32 len); //SPI发送接收函数,与spi_mosi相比，多了先发送cmd 缓冲区的步骤，即分开两部分发送
+void spi_mosi       (SPIn_e spin, SPIn_PCSn_e pcs, const uint8 *modata, uint8 *midata, const uint32 len);    //SPI发送接收函数,发送databuff数据，并把接收到的数据存放在databuff里(注意，会覆盖原来的databuff)
+void spi_mosi_cmd   (SPIn_e spin, SPIn_PCSn_e pcs, const uint8 *mocmd , uint8 *micmd , const uint8 *modata, uint8 *midata, const uint32 cmdlen , const uint32 len); //SPI发送接收函数,与spi_mosi相比，多了先发送cmd 缓冲区的步骤，即分开两部分发送
 
 #ifdef __cplusplus
 	}

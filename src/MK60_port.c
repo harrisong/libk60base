@@ -64,7 +64,7 @@ void  port_init_NoALT(PTXn_e ptxn, uint32 cfg)
 /*
 void porta_handler(void)
 {
-    uint8_t  n = 0;    //引脚号
+    uint8  n = 0;    //引脚号
 
     //PTA6
     n = 6;
