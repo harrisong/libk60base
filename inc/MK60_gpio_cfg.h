@@ -1210,8 +1210,9 @@ PT_BYTE(A,0,PDOR)  =   (((Dtype *)(&(PTA_BASE_PTR->PDOR)))->B[0])
 #define PTB_BYTE3_IN   PTB_BASE_PTR->PDIRByte.Byte3
 
 //¶¨ÒåPTCµÄ8Î»ÊäÈë¶Ë¿Ú  ¡ª¡ªby Ò°»ð
-#define PTC_BYTE0_IN   PTC_BASE_PTR->PDIRByte.Byte0
-#define PTC_BYTE1_IN   PTC_BASE_PTR->PDIRByte.Byte1
+//#define PTC_BYTE0_IN   PTC_BASE_PTR->PDIRByte.Byte0
+#define PTC_BYTE0_IN   PT_BYTE(C,0,PDIR)
+#define PTC_BYTE1_IN   PT_BYTE(C,1,PDIR)
 #define PTC_BYTE2_IN   PTC_BASE_PTR->PDIRByte.Byte2
 #define PTC_BYTE3_IN   PTC_BASE_PTR->PDIRByte.Byte3
 
