@@ -102,7 +102,7 @@ void dma_portx2buff_init(DMA_CHn CHn, void *SADDR, void *DADDR, PTXn_e ptxn, DMA
     DMA_DLAST_SGA(CHn)  =   (uint32)( (cfg & DADDR_KEEPON ) == 0 ? (-count)  : 0 ); //调整目的地址的附加值,主循环结束后恢复目的地址或者保持地址
     DMA_CSR(CHn)        =   (0
                              | DMA_CSR_BWC(3)               //带宽控制,每读一次，eDMA 引擎停止 8 个周期（0不停止；1保留；2停止4周期；3停止8周期）
-                             | DMA_CSR_DREQ_MASK            //主循环结束后停止硬件请求
+                             //| DMA_CSR_DREQ_MASK            //主循环结束后停止硬件请求
                              | DMA_CSR_INTMAJOR_MASK        //主循环结束后产生中断
                             );
 
