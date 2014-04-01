@@ -13,5 +13,6 @@ void AssertHandler(const char *file, int line, const char *fn,
 		iprintf("Assertion(%s) failed in %s:%s at line %d\n", expression, file,
 				fn, line);
 		DELAY_MS(250);
+		__BREAKPOINT();
 	}
 }
