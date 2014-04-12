@@ -9,12 +9,12 @@
 
 #include <stdio.h>
 
-#define LOG_E(fmt, ...) iprintf("ERROR: " fmt "\n", ##__VA_ARGS__)
-#define LOG_W(fmt, ...) iprintf("WARN: " fmt "\n", ##__VA_ARGS__)
-#define LOG_I(fmt, ...) iprintf("INFO: " fmt "\n", ##__VA_ARGS__)
+#define LOG_E(fmt, ...) printf("ERROR: " fmt "\n", ##__VA_ARGS__)
+#define LOG_W(fmt, ...) printf("WARN: " fmt "\n", ##__VA_ARGS__)
+#define LOG_I(fmt, ...) printf("INFO: " fmt "\n", ##__VA_ARGS__)
 #ifdef DEBUG
-	#define LOG_D(fmt, ...) iprintf("DEBUG: " fmt "\n", ##__VA_ARGS__)
-	#define LOG_V(fmt, ...) iprintf("VERBOSE: " fmt "\n", ##__VA_ARGS__)
+	#define LOG_D(fmt, ...) printf("DEBUG: " fmt "\n", ##__VA_ARGS__)
+	#define LOG_V(fmt, ...) printf("VERBOSE: " fmt "\n", ##__VA_ARGS__)
 #else
 	#define LOG_D(fmt, ...)
 	#define LOG_V(fmt, ...)
