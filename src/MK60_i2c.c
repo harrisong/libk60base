@@ -212,23 +212,34 @@ uint8 i2c_read_reg(I2Cn_e i2cn, uint8 SlaveID, uint8 reg)
     i2c_Start(i2cn);                                    //发送启动信号
 
     i2c_write_byte(i2cn, ( SlaveID << 1 ) | MWSR);      //发送从机地址和写位
+    //result = I2C_D_REG(I2CN[i2cn]);
 
+    //printf("1\n");
     i2c_write_byte(i2cn, reg);                          //发送从机里的寄存器地址
 
+    //printf("2\n");
     i2c_RepeatedStart(i2cn);                            //复合格式，发送重新启动信号
 
+    //printf("2\n");
     i2c_write_byte(i2cn, ( SlaveID << 1) | MRSW );      //发送从机地址和读位
 
-    i2c_PutinRxMode(i2cn);                              //进入接收模式(不应答,只接收一个字节)
-    result = I2C_D_REG(I2CN[i2cn]);                     //虚假读取一次，启动接收数据
+    //printf("3\n");
+    i2c_EnterRxMode(i2cn);
+    //printf("4\n");
+    //进入接收模式(不应答,只接收一个字节)
+    result = I2C_D_REG(I2CN[i2cn]);
+    //printf("5\n");                    //虚假读取一次，启动接收数据
     i2c_Wait(i2cn);                                     //等待接收完成
-
+    //printf("6\n");
     i2c_Stop(i2cn);                                     //发送停止信号
-
+    //等待接收完成
+//printf("7\n");
     result = I2C_D_REG(I2CN[i2cn]);                     //读取数据
 
+    //printf("8\n");
     Pause();                                            //必须延时一下，否则出错
 
+    //printf("9\n");
     return result;
 }
 
@@ -256,6 +267,29 @@ void i2c_write_reg(I2Cn_e i2cn, uint8 SlaveID, uint8 reg, uint8 Data)
 
     i2c_Stop(i2cn);
 
-    Pause();                                            //延时太短的话，可能写出错
+    Pause();                                     //延时太短的话，可能写出错
 }
 
+void i2c_read_nbytes(I2Cn_e i2cn, uint8_t addr, uint8_t reg, int length, uint8_t * pdata){
+	int i = 0;
+	uint8_t dump;
+	i2c_Start(i2cn);
+	i2c_write_byte(i2cn, ( addr << 1 ) | MWSR);
+	i2c_write_byte(i2cn, reg);
+    i2c_RepeatedStart(i2cn);
+	i2c_write_byte(i2cn, ( addr << 1 ) | MRSW);
+    i2c_EnterRxMode(i2cn);
+    dump = I2C_D_REG(I2CN[i2cn]);
+	i2c_Wait(i2cn);
+	for(i = 0; i < length; i++){
+		if(i == length - 1){
+			i2c_PutinRxMode(i2cn);
+			*(pdata + i) = I2C_D_REG(I2CN[i2cn]);
+		}
+		else{
+			*(pdata + i) = I2C_D_REG(I2CN[i2cn]);
+		}
+		i2c_Wait(i2cn);
+	}
+	i2c_Stop(i2cn);
+}
