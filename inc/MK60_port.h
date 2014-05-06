@@ -65,6 +65,7 @@ typedef enum
 //根据以上的定义，可以得出：PTx = PTxn / 32 ; PTn = PTxn & 31
 #define PTX(PTxn)           ((PTxn)>>5)
 #define PTn(PTxn)           ((PTxn)&0x1f)
+#define PTXn(ptx, ptn)      (((ptx)<<5) + ((ptn)&0x1f))
 #define PORTX_BASE(PTxn)     PORTX[PTX(PTxn)]       //PORT模块的地址
 
 /*! 枚举PORT 配置 */
