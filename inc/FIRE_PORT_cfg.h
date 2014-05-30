@@ -34,8 +34,13 @@
 #define UART2_RX    PTD2        //PTD2
 #define UART2_TX    PTD3        //PTD3
 
-#define UART3_RX    PTE5       //PTB10、PTC16、PTE5
-#define UART3_TX    PTE4       //PTB11、PTC17、PTE4
+#if defined(K60_2014_CCD)
+	#define UART3_RX    PTC16       //PTB10、PTC16、PTE5
+	#define UART3_TX    PTC17       //PTB11、PTC17、PTE4
+#else
+	#define UART3_RX    PTE5       //PTB10、PTC16、PTE5
+	#define UART3_TX    PTE4       //PTB11、PTC17、PTE4
+#endif
 
 #define UART4_RX    PTE25       //PTC14、PTE25
 #define UART4_TX    PTE24       //PTC15、PTE24
@@ -50,7 +55,7 @@
 #define FTM0_CH1    PTC2        //PTC2、PTA4
 #define FTM0_CH2    PTC3        //PTC3、PTA5
 #define FTM0_CH3    PTC4        //PTC4、PTA6
-#define FTM0_CH4    PTD4        //PTD4、PTA7
+#define FTM0_CH4    PTA7        //PTD4、PTA7
 #define FTM0_CH5    PTD5        //PTD5、PTA0            PTA0不要用（与Jtag、SWD冲突）
 #define FTM0_CH6    PTD6        //PTD6、PTA1            PTA1不要用（与Jtag冲突）
 #define FTM0_CH7    PTD7        //PTD7、PTA2            PTA2不要用（与Jtag冲突）
@@ -64,6 +69,20 @@
 	//      模块通道    端口          可选范围              建议
 	#define FTM2_CH0    PTB18       //PTA10、PTB18
 	#define FTM2_CH1    PTB19       //PTA11、PTB19
+
+#elif defined(K60_2014_CCD)
+	#define FTM1_CH0    PTA8
+	#define FTM1_CH1    PTA9
+
+	#define FTM2_CH0    PTA10
+	#define FTM2_CH1    PTA11
+
+#elif defined(K60_2013_CCD)
+	#define FTM1_CH0    PTA8
+	#define FTM1_CH1    PTA9
+
+	#define FTM2_CH0    PTB18
+	#define FTM2_CH1    PTB19
 
 #else
 	#define FTM1_CH0    PTA8
