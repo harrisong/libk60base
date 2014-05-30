@@ -71,6 +71,7 @@ void gpio_init (PTXn_e ptxn, GPIO_CFG cfg, uint8 data)
  *  @since      v5.0
  *  Sample usage:       gpio_ddr (PTA8, GPI);    //设置 PTA8 管脚为输入
  */
+/*
 void    gpio_ddr   (PTXn_e ptxn, GPIO_CFG cfg)
 {
     //端口方向控制输入还是输出
@@ -85,6 +86,7 @@ void    gpio_ddr   (PTXn_e ptxn, GPIO_CFG cfg)
         GPIO_PDDR_REG(GPIOX_BASE(ptxn)) |= (1 << PTn(ptxn));            // GPIO PDDR 管脚号 置1，即对应管脚配置为端口方向输出
     }
 }
+*/
 
 /*!
  *  @brief      设置引脚状态
@@ -94,6 +96,7 @@ void    gpio_ddr   (PTXn_e ptxn, GPIO_CFG cfg)
  *  @warning    务必保证数据方向为输出（DEBUG模式下，有断言进行检测）
  *  Sample usage:       gpio_set (PTA8, 1);    // PTA8 管脚 输出 1
  */
+/*
 void gpio_set (PTXn_e ptxn, uint8 data)
 {
     ASSERT( BIT_GET( GPIO_PDDR_REG(GPIOX_BASE(ptxn)) , PTn(ptxn)) == GPO ); // 断言，检测 输出方向是否为输出
@@ -109,7 +112,7 @@ void gpio_set (PTXn_e ptxn, uint8 data)
         GPIO_PDOR_REG(GPIOX_BASE(ptxn))  |= (1 << PTn(ptxn));   // GPIO PDOR 管脚号 置1，即对应管脚配置为端口输出高电平
     }
 }
-
+*/
 
 /*!
  *  @brief      反转引脚状态
@@ -118,6 +121,7 @@ void gpio_set (PTXn_e ptxn, uint8 data)
  *  @warning    务必保证数据方向为输出（DEBUG模式下，有断言进行检测）
  *  Sample usage:       gpio_turn (PTA8);    // PTA8 管脚 输出 反转
  */
+/*
 void gpio_turn (PTXn_e ptxn)
 {
     ASSERT( BIT_GET( GPIO_PDDR_REG(GPIOX_BASE(ptxn)) , PTn(ptxn)) == GPO ); // 断言，检测 输出方向是否为输出
@@ -126,6 +130,7 @@ void gpio_turn (PTXn_e ptxn)
     GPIO_PTOR_REG( GPIOX_BASE(ptxn))  =  1 << (PTn(ptxn ));                 // GPIO PTOR ptxn 置1，其他清0 ，即对应管脚配置为端口输出反转，其他位不变
                                                                             // 此处不能用 BIT_SET 这个宏来置1 ，因为必须保证其他位 不变，其他位直接清0即可
 }
+*/
 
 /*!
  *  @brief      读取引脚输入状态
@@ -135,6 +140,7 @@ void gpio_turn (PTXn_e ptxn)
  *  @warning    务必保证数据方向为输入（DEBUG模式下，有断言进行检测）
  *  Sample usage:       uint8 pta8_data = gpio_get (PTA8);    // 获取 PTA8 管脚 输入电平
  */
+/*
 uint8 gpio_get(PTXn_e ptxn)
 {
     ASSERT( BIT_GET( GPIO_PDDR_REG(GPIOX_BASE(ptxn)) , PTn(ptxn)) == GPI ); // 断言，检测 输出方向是否为输入
@@ -142,3 +148,4 @@ uint8 gpio_get(PTXn_e ptxn)
 
     return ((GPIO_PDIR_REG(GPIOX_BASE(ptxn)) >> PTn(ptxn )) & 0x01);        // 获取 GPIO PDIR ptxn 状态，即读取管脚输入电平
 }
+*/
