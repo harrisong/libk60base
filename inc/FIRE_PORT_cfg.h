@@ -63,8 +63,8 @@
 
 #if defined(K60_2014) || defined(K60_2014_GEN2) || defined(K60_2014_CAMERA)
 	//      模块通道    端口          可选范围              建议
-	#define FTM1_CH0    PTB0       //PTA8、PTA12、PTB0
-	#define FTM1_CH1    PTB1       //PTA9、PTA13、PTB1
+	#define FTM1_CH0    PTA8       //PTA8、PTA12、PTB0
+	#define FTM1_CH1    PTA9       //PTA9、PTA13、PTB1
 
 	//      模块通道    端口          可选范围              建议
 	#define FTM2_CH0    PTB18       //PTA10、PTB18
