@@ -25,3 +25,4 @@ testcpp/*
 .settings/*
 .cproject
 .project
+/Release
