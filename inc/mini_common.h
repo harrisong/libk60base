@@ -100,6 +100,15 @@ typedef union
 #define __RAMFUNC __attribute__((__long_call__, __section__(".m_data_20000000")))
 #define __BREAKPOINT() asm("BKPT 255")
 
+
+/**
+ *  @brief 变量的位清0和置1
+ */
+#define BIT_CLEAN(var,n)        (var) &= ~(1<<(n))   //变量var 的n位（即第n+1位）清0
+#define BIT_SET(var,n)          (var) |=  (1<<(n))   //变量var 的n位（即第n+1位）置1
+#define BIT_GET(var,n)          (((var)>>(n))&0x01)  //读取变量var 的n位（即第n+1位）
+
+
 #include "log.h"
 
 #ifdef __cplusplus
