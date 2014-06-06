@@ -34,7 +34,7 @@
 #define UART2_RX    PTD2        //PTD2
 #define UART2_TX    PTD3        //PTD3
 
-#if defined(K60_2014_CCD)
+#if defined(K60_2014_CCD) || defined(K60_2014)
 	#define UART3_RX    PTC16       //PTB10、PTC16、PTE5
 	#define UART3_TX    PTC17       //PTB11、PTC17、PTE4
 #else
@@ -107,8 +107,8 @@
 #define I2C0_SCL    PTD8        // PTB0、PTB2、PTD8
 #define I2C0_SDA    PTD9        // PTB1、PTB3、PTD9
 
-#define I2C1_SCL    PTC10       // PTE1、PTC10
-#define I2C1_SDA    PTC11       // PTE0、PTC11
+#define I2C1_SCL    PTE1       // PTE1、PTC10
+#define I2C1_SDA    PTE0       // PTE0、PTC11
 
 
 /**********************************  SPI   ***************************************/
@@ -132,7 +132,7 @@
 #define SPI1_SIN    PTB17       // PTE3、PTB17、            全部都是 ALT2
 
 #define SPI1_PCS0   PTE4        // PTE4、PTB10、            全部都是 ALT2
-#define SPI1_PCS1   PTE0        // PTE0、PTB9、             全部都是 ALT2
+#define SPI1_PCS1   PTE9        // PTE0、PTB9、             全部都是 ALT2
 #define SPI1_PCS2   PTE5        // PTE5、                   全部都是 ALT2
 #define SPI1_PCS3   PTE6        // PTE6、                   全部都是 ALT2
 
