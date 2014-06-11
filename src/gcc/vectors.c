@@ -193,7 +193,7 @@ void InitVectorTable(void)
 
 void SetIsr(VECTORn_t vector, tIsrFunc handler)
 {
-	__vect_ram.__fun[vector - 1] = handler;
+	__vect_ram.__fun[vector - 1] = handler ? handler : DefaultIsr;
 }
 
 void EnableIsr(VECTORn_t vector)
