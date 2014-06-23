@@ -119,7 +119,7 @@ void dma_portx2buff_init(DMA_CHn CHn, void *SADDR, void *DADDR, PTXn_e ptxn, DMA
                                              );
 
     //配置触发源（默认是 上升沿触发）
-    port_init(ptxn, ALT1 | DMA_RISING);
+    port_init(ptxn, ALT1 | DMA_FALLING);
 
     /*  配置输入源   */
     //SADDR 实际上就是 GPIO的 输入寄存器 PDIR 的地址
