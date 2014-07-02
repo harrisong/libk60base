@@ -10,51 +10,51 @@
 
 FwriteHandler __g_fwrite_handler = NULL;
 
-void _exit(int status)
+void __attribute__((__used__)) _exit(int status)
 {
 	while (1)
 	{}
 }
 
-int _open(const char *name, int flags, int mode)
+int __attribute__((__used__)) _open(const char *name, int flags, int mode)
 {
 	return -1;
 }
 
-int _fstat(int file, struct stat *st)
+int __attribute__((__used__)) _fstat(int file, struct stat *st)
 {
 	st->st_mode = S_IFCHR;
 	return 0;
 }
 
-int _isatty(int file)
+int __attribute__((__used__)) _isatty(int file)
 {
 	return 1;
 }
 
-int _lseek(int file, int ptr, int dir)
+int __attribute__((__used__)) _lseek(int file, int ptr, int dir)
 {
 	return 0;
 }
 
-int _read(int file, char *ptr, int len)
+int __attribute__((__used__)) _read(int file, char *ptr, int len)
 {
 	return 0;
 }
 
-int _write(int file, char *ptr, int len)
+int __attribute__((__used__)) _write(int file, char *ptr, int len)
 {
 	// This function won't fail even if __g_fwrite_handler is not set, it will
 	// simply ignore the string in such case
 	return __g_fwrite_handler ? __g_fwrite_handler(file, ptr, len) : len;
 }
 
-int _close(int file)
+int __attribute__((__used__)) _close(int file)
 {
 	return -1;
 }
 
-caddr_t _sbrk(int incr)
+caddr_t __attribute__((__used__)) _sbrk(int incr)
 {
 	extern char _end;		/* Defined by the linker */
 	extern uint32_t __stack_end;
@@ -77,13 +77,13 @@ caddr_t _sbrk(int incr)
 	return (caddr_t)prev_heap_end;
 }
 
-int _getpid(void)
+int __attribute__((__used__)) _getpid(void)
 {
 	return 1;
 }
 
 #undef errno
-int _kill(int pid, int sig)
+int __attribute__((__used__)) _kill(int pid, int sig)
 {
 	extern int errno;
 	errno = EINVAL;
