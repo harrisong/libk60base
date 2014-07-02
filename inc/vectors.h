@@ -43,9 +43,6 @@
 #ifndef LIBBASE_VECTORS_H_
 #define LIBBASE_VECTORS_H_
 
-#include "mini_common.h"
-#include <stdint.h>
-
 #ifdef __cplusplus
 	extern "C" {
 #endif
@@ -313,6 +310,9 @@ void EnableIsr(VECTORn_t vector);
 void DisableIsr(VECTORn_t vector);
 __ISR void DefaultIsr(void);
 void HardFaultHandlerAsm(void) __attribute__((__naked__));
+
+typedef void (*HardFaultHandler)(void);
+extern HardFaultHandler __g_hard_fault_handler;
 
 #define GetVectorX() (VECTORn_t)(*(volatile uint8_t*)(0xE000ED04))
 
