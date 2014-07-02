@@ -34,8 +34,8 @@ typedef enum GPIO_CFG
     GPO         = 1,                                //定义管脚输出方向
 } GPIO_CFG;
 
-#define HIGH  1u
-#define LOW   0u
+//#define HIGH  1u
+//#define LOW   0u
 
 extern  GPIO_MemMapPtr      GPIOX[PTX_MAX];
 #define GPIOX_BASE(PTxn)    GPIOX[PTX(PTxn)]       //GPIO模块的地址
