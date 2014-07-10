@@ -1,15 +1,15 @@
 /*!
  *     COPYRIGHT NOTICE
- *     Copyright (c) 2013,��火科���
+ *     Copyright (c) 2013,野火科技
  *     All rights reserved.
- *     ����讨论：��������学论����http://www.chuxue123.com
+ *     技术讨论：野火初学论坛 http://www.chuxue123.com
  *
- *     ��注��出处���，以下��������容��������属��������������������������许，���得用于���业用�����
- *     修改��容�����须������������������������声�������
+ *     除注明出处外，以下所有内容版权均属野火科技所有，未经允许，不得用于商业用途，
+ *     修改内容时必须保留野火科技的版权声明。
  *
  * @file       MK60_adc.h
- * @brief      ADC��数
- * @author     ��火科���
+ * @brief      ADC函数
+ * @author     野火科技
  * @version    v5.0
  * @date       2013-08-28
  */
@@ -27,13 +27,13 @@ typedef enum
     // ---------------------------------ADC0-------------------------
     ADC0_DP0,
     ADC0_DP1,
-    PGA0_DP,        //不支��ADC，���要������ADC PGA register 设置��大增���
+    PGA0_DP,        //不支持ADC，需要配置 ADC PGA register 设置放大增益
     ADC0_DP3,
-    //软件触���不支��B�����
-    ADC0_SE4b,      // PTC2     不支��软件ADC
-    ADC0_SE5b,      // PTD1     不支��软件ADC
-    ADC0_SE6b,      // PTD5     不支��软件ADC
-    ADC0_SE7b,      // PTD6     不支��软件ADC
+    //软件触发不支持B通道
+    ADC0_SE4b,      // PTC2     不支持软件ADC
+    ADC0_SE5b,      // PTD1     不支持软件ADC
+    ADC0_SE6b,      // PTD5     不支持软件ADC
+    ADC0_SE7b,      // PTD6     不支持软件ADC
 
     ADC0_SE8,       // PTB0
     ADC0_SE9,       // PTB1
@@ -48,32 +48,32 @@ typedef enum
     ADC0_SE18,      // PTE25
     ADC0_DM0,       // ADC0_DM0
     ADC0_DM1,       // ADC0_DM1
-    RES0,           // 保���
-    RES1,           // 保���
-    DAC0_OUT,       // DAC0输出 不支��ADC
-    RES2,           // 保���
-    RES3,           // 保���
-    Temp0_Sensor,   // Temperature Sensor,��部温度测���，可��ADC��数
-    Bandgap0,       // 温度补偿结���带�����������  不支��ADC
-    RES4,           // 保���
-    VREFH0,         // �����高电������用ADC��数 ,结�����为 2^n-1
-    VREFL0,         // �����低电������用ADC��数 ,结�����为 0
-    Module0_Dis,    // 不支����ADC
+    RES0,           // 保留
+    RES1,           // 保留
+    DAC0_OUT,       // DAC0输出 不支持ADC
+    RES2,           // 保留
+    RES3,           // 保留
+    Temp0_Sensor,   // Temperature Sensor,内部温度测量，可用ADC函数
+    Bandgap0,       // 温度补偿结构带隙基准源   不支持ADC
+    RES4,           // 保留
+    VREFH0,         // 参考高电压,可用ADC函数 ,结果恒为 2^n-1
+    VREFL0,         // 参考低电压,可用ADC函数 ,结果恒为 0
+    Module0_Dis,    // 不支持 ADC
 
     // ---------------------------------ADC1-------------------------
     ADC1_DP0,
     ADC1_DP1,
-    PGA1_DP,        // 不支����ADC
+    PGA1_DP,        // 不支持 ADC
     ADC1_DP3,
     ADC1_SE4a,      // PTE0
     ADC1_SE5a,      // PTE1
     ADC1_SE6a,      // PTE2
     ADC1_SE7a,      // PTE3
 
-    ADC1_SE4b,  // PTC8     不支��软件ADC ,传��� ADC1_SE4b ��软件ADC��数�����会������ADC1_SE4a 处�������
-    ADC1_SE5b,  // PTC9     不支��软件ADC
-    ADC1_SE6b,  // PTC10    不支��软件ADC
-    ADC1_SE7b,  // PTC11    不支��软件ADC
+    ADC1_SE4b,  // PTC8     不支持软件ADC ,传递 ADC1_SE4b 到软件ADC函数里，会当作 ADC1_SE4a 处理。
+    ADC1_SE5b,  // PTC9     不支持软件ADC
+    ADC1_SE6b,  // PTC10    不支持软件ADC
+    ADC1_SE7b,  // PTC11    不支持软件ADC
 
     ADC1_SE8,       // PTB0
     ADC1_SE9,       // PTB1
@@ -88,21 +88,21 @@ typedef enum
     VREF_OUTPUT,    // VREF Output
     ADC1_DM0,       // ADC1_DM0
     ADC1_DM1,       // ADC1_DM1
-    RES5,           //保���
+    RES5,           //保留
     RES6,
     DAC1_OUT,
-    RES7,           //保���
+    RES7,           //保留
     RES8,
     Temp1_Sensor,
-    Bandgap1,       // 温度补偿结���带�����������  不支��ADC
+    Bandgap1,       // 温度补偿结构带隙基准源   不支持ADC
     RES9,
-    VREFH1,         // �����高电������用ADC��数 ,结�����为 2^n-1
-    VREFL1,         // �����低电������用ADC��数 ,结�����为 0
-    Module1_Dis,    // 不支����ADC
+    VREFH1,         // 参考高电压,可用ADC函数 ,结果恒为 2^n-1
+    VREFL1,         // 参考低电压,可用ADC函数 ,结果恒为 0
+    Module1_Dis,    // 不支持 ADC
 
 } ADCn_Ch_e;
 
-typedef enum  //ADC模���
+typedef enum  //ADC模块
 {
     ADC0,
     ADC1
@@ -118,11 +118,13 @@ typedef enum ADC_nbit
 } ADC_nbit;
 
 
-//外部��数��口声���
+//外部函数接口声明
 extern uint16   adc_average (ADCn_Ch_e, ADC_nbit,uint8);
-extern void     adc_init    (ADCn_Ch_e);                //ADC���������
-extern uint16   adc_once    (ADCn_Ch_e, ADC_nbit);      //�����������模��������AD����
-extern void     adc_stop    (ADCn_e);                   //��止ADC转换
+extern void     adc_init    (ADCn_Ch_e);                //ADC初始化
+extern uint16   adc_once    (ADCn_Ch_e, ADC_nbit);      //采集一次一路模拟量的AD值
+
+
+extern void     adc_stop    (ADCn_e);                   //停止ADC转换
 
 #ifdef __cplusplus
 	}
