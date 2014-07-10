@@ -190,6 +190,17 @@ uint16 adc_once(ADCn_Ch_e adcn_ch, ADC_nbit bit) //采集某路模拟量的AD值
     return result;
 }
 
+uint16 adc_average (ADCn_Ch_e adcn_ch, ADC_nbit bit,uint8 N)
+{
+	uint32 tmp = 0;
+	    uint8  i;
+	    //ASSERT( ((adcn == ADC0) && (ch>=AD8 && ch<=AD18)) || ((adcn == ADC1)&& (ch>=AD4a && ch<=AD17)) ) ;   //¨Ï¥ÎÂ_¨¥ÀË´úADCn_CHn¬O§_¥¿±`
+
+	    for(i = 0; i < N; i++)
+	        tmp += adc_once(adcn_ch,bit);
+	    tmp = tmp / N;
+	    return (uint16)tmp;
+}
 /*!
  *  @brief      启动ADC软件采样(不支持B通道)
  *  @param      ADCn_Ch_e    ADC通道
