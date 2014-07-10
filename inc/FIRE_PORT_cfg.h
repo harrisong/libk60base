@@ -111,8 +111,8 @@
 /**********************************  I2C   ***************************************/
 
 //      模块通道    端口          可选范围              建议
-#define I2C0_SCL    PTD8        // PTB0、PTB2、PTD8
-#define I2C0_SDA    PTD9        // PTB1、PTB3、PTD9
+#define I2C0_SCL    PTB0        // PTB0、PTB2、PTD8
+#define I2C0_SDA    PTB1        // PTB1、PTB3、PTD9
 
 #define I2C1_SCL    PTE1       // PTE1、PTC10
 #define I2C1_SDA    PTE0       // PTE0、PTC11

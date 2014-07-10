@@ -17,6 +17,8 @@
 #ifndef __MK60_PORT_H__
 #define __MK60_PORT_H__
 
+#include "stdint.h"
+
 #ifdef __cplusplus
 	extern "C" {
 #endif
@@ -110,8 +112,8 @@ typedef enum
 extern PORT_MemMapPtr PORTX[PTX_MAX];
 
 
-extern void  port_init         (PTXn_e , uint32 cfg);   //PORT初始化(配置 MUX 复用功能)
-extern void  port_init_NoALT   (PTXn_e , uint32 cfg);   //PORT初始化(不改变 MUX 复用功能)
+extern void  port_init         (PTXn_e , uint32_t cfg);   //PORT初始化(配置 MUX 复用功能)
+extern void  port_init_NoALT   (PTXn_e , uint32_t cfg);   //PORT初始化(不改变 MUX 复用功能)
 
 
 /*      中断复位函数模版    */

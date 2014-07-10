@@ -17,12 +17,14 @@
 #ifndef _MK60_DWT_H_
 #define _MK60_DWT_H_
 
+#include "stdint.h"
+
 #ifdef __cplusplus
 	extern "C" {
 #endif
 
-extern void dwt_delay_us(uint32 us);
-extern void dwt_delay_ms(uint32 ms);
+extern void dwt_delay_us(uint32_t us);
+extern void dwt_delay_ms(uint32_t ms);
 
 #ifdef __cplusplus
 	}

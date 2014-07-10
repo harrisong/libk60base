@@ -32,14 +32,12 @@
 #include "vectors.h"
 #include "hw_common.h"
 
+HardFaultHandler __g_hard_fault_handler = NULL;
+
 
 /* ISR prototype */
 extern uint32_t __SP_INIT;
-extern
-#ifdef __cplusplus
-"C"
-#endif
-void __thumb_startup( void );
+extern void __thumb_startup( void );
 
 
 /*lint -esym(765,__vect_table) Disable MISRA rule (8.10) checking for symbols (__vect_table). Definition of the interrupt vector table placed by linker on a predefined location. */
@@ -293,6 +291,10 @@ void HardFaultHandlerC(unsigned long *hardfault_args)
 	// Bus Fault Address Register
 	_BFAR = (*((volatile unsigned long*)(0xE000ED38)));
 
+	if (__g_hard_fault_handler)
+	{
+		__g_hard_fault_handler();
+	}
 	__BREAKPOINT(); // Break into the debugger
 }
 
