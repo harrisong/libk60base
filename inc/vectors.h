@@ -50,6 +50,8 @@
 /*
  * 中断号类型声明
  */
+
+#ifndef LIBBASE_K60_HARDWARE_H_
 typedef enum
 {
 	/******  Cortex-M4 Processor Exceptions Numbers ****************************************************************/
@@ -169,6 +171,10 @@ typedef enum
 	Reserved119_IRQn                = 103,      // 保留 interrupt 119
 } IRQn_t, IRQn_Type;
 
+#else
+typedef IRQn_Type IRQn_t;
+
+#endif
 
 /*
  * 中断向量表编号声明
