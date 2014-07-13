@@ -77,6 +77,13 @@
 	#define FTM2_CH0    PTA10
 	#define FTM2_CH1    PTA11
 
+#elif defined(K60_2014_MAGNETIC)
+	#define FTM1_CH0    PTA8
+	#define FTM1_CH1    PTA9
+
+	#define FTM2_CH0    PTA10
+	#define FTM2_CH1    PTA11
+
 #elif defined(K60_2013_CCD)
 	#define FTM1_CH0    PTA8
 	#define FTM1_CH1    PTA9
