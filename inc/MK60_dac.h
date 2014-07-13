@@ -28,7 +28,7 @@ typedef enum DACn       //DAC模块
 } DACn_e;
 
 extern void dac_init(DACn_e);               //DAC一次转换初始化
-extern void dac_out(DACn_e, uint16 val);    //DAC一次转换操作
+extern void dac_out(DACn_e, uint16_t val);    //DAC一次转换操作
 
 #ifdef __cplusplus
 	}
